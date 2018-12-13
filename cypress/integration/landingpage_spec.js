@@ -16,7 +16,7 @@ describe('Wildbook instance landing page', function() {
 
 describe('Wildbook instance landing page known bugs', function() {
   it('looks for text containing null', function() {
-    cy.contains('Mark Aaron Fisher').should('not.exist');
+    cy.contains('Mark Aaron Fisher').should('exist');
     cy.contains('null').should('not.exist');
   });
 });
