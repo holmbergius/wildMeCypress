@@ -1,7 +1,6 @@
-
-beforeEach(()=>{
-
-});
+// beforeEach(()=>{
+//
+// });
 
 describe('Wildbook instance landing page', function() {
   before(function() {
@@ -19,17 +18,23 @@ describe('Wildbook instance landing page', function() {
 
 describe('Log in page tests', function(){
   before(function() {
-    cy.visit('https://www.flukebook.org/login.jsp');
+    cy.visit('/login.jsp');
     cy.on('uncaught:exception', (err, runnable) => {
     expect(err.message).to.include('of undefined')
       done()
       return false
     });
   });
+  it('cannot visit welcome page before logging in', function(){
+    cy.visit('/welcome.jsp');
+    cy.contains('login').should('exist');
+  });
   it('logs in', function(){
     cy.get('input[name=username]').type('atticus29');
     cy.get('input[name=password]').type('FPython!11');
-    cy.get('input[name=submit]').click();
+    cy.get('input[name=submit]').submit(); //TODO figure out why this isn't working
+    cy.visit('/welcome.jsp');
+    cy.contains('login').should('not.exist');
   });
 });
 
