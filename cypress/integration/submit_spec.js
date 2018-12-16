@@ -25,6 +25,9 @@ describe('Wildbook instance login page', function() {
     cy.get('input[id=comments]').type('This is a lot of text fields');
     cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
     cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of the captcha stuff
+    // cy.hash().should('eq','') //TODO new URL starts with confirmSubmit.jsp but then has ?number= something dynamic that I'm not sure how to access from the front end
+    cy.contains('Success'); //TODO not best practice but above statement was too hard
+
 
   });
 
@@ -47,3 +50,9 @@ describe('Wildbook instance login page', function() {
     cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
     //TODO find a way to click the advanced info button (push a change with an id to the wildbook repo?)
   });
+
+  it('should not contain null text', function() {
+    cy.contains('null').should('not.exist');
+  });
+
+});

@@ -49,9 +49,8 @@ describe('Wildbook instance login page', function() {
     cy.contains('Database login').should('exist');
   });
 
-});
-
-describe('Log in page tests', function(){
-
+  it('should not contain null text', function() {
+    cy.contains('null').should('not.exist');
+  });
 
 });
