@@ -10,7 +10,7 @@ describe('Wildbook instance landing page known bugs', function() {
   });
 
   it('should not contain How It Works text', function() {
-    cy.contains('HOW IT WORKS').should('exist');
+    cy.contains('How it Works').should('exist');
   });
 
   it('should not contain null text', function() {
