@@ -11,24 +11,25 @@
 //
 // -- This is a parent command --
 Cypress.Commands.add("login", () => {
-  cy.request({
-    method: 'POST',
-    url: 'halp',
-    body: {
-      user: {
-        username: 'atticus29',
-        password: 'myPW',
-      }
-    }
-  })
-  .then((resp)=>{
-    window.localStorage.setItem('halp', resp.body.user.token);
-  });
-  // cy.visit('/login.jsp');
-  // cy.get('input[name=username]').type('atticus29'); //TODO put username in a better place
-  // cy.get('input[name=password]').type('FPython!11{enter}'); //TODO put password in a better place
+  // cy.request({
+  //   method: 'POST',
+  //   url: 'halp',
+  //   body: {
+  //     user: {
+  //       username: 'atticus29',
+  //       password: 'myPW',
+  //     }
+  //   }
+  // })
+  // .then((resp)=>{
+  //   window.localStorage.setItem('halp', resp.body.user.token);
+  // });
+  cy.visit('/login.jsp');
+  cy.url().should('not.match',/welcome/);
+  cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
+  cy.get('input[name=password]').type('tomcat123{enter}'); //TODO put password in a better place
   // cy.get('form').first().submit(); //TODO FIX
-  // cy.hash().should('eq','welcome.jsp');
+  cy.url().should('match',/welcome/);
 });
 
 Cypress.Commands.add("createAndNavigateToEncounter", ()=>{

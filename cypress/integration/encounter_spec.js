@@ -70,6 +70,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('edits metadata', function(){
     cy.get('input[id=editMeta]').click();
+    cy.contains('null').should('not.exist');
     cy.get('#selectState').select('unapproved', {force: true});
     cy.get('input[id=editWork]').click();
     cy.get('#submitterSelect').select('atticus29', {force: true});
@@ -84,13 +85,14 @@ describe('Wildbook instance encounter page', function() {
     cy.get('input[id=editMeta]').click();
     cy.get('input[id=deleteButton]').click();
     Cypress.on('window:confirm', (err, runnable) => {
-      // return true; //TODO necessary?
+      // return true; //TODO necessary? TODO I suspect this may not work
     });
     cy.contains('I have removed encounter');
   });
 
   it('tests whether tapir link is dead', function(){
     cy.get('input[id=editMeta]').click();
+    cy.contains('null').should('not.exist');
     cy.get('a[href=nulltapirlink]').click(); //TODO will this work?
     cy.contains('404');
   });
@@ -100,15 +102,19 @@ describe('Wildbook instance encounter page', function() {
   });
 
   it('adds water temperature and salinity', function(){
+    cy.get('input[id=editMeasure]').click();
+    cy.contains('null').should('not.exist');
     cy.get('input[id=measurementEvent0]').type('11');
     cy.get('input[id=measurementEvent1]').type('35');
     cy.get('input[id=addMeasurements]').click();
+    cy.contains('Action results');
     cy.get('a').click(); //TODO how to access this view encounter link?
   });
 
 
   it('adds left tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
+    cy.contains('null').should('not.exist');
     cy.get('input[name=metalTag(left)]').type('leftTag');
     cy.get('input[id=setMetalTags]').click();
     cy.contains('Action results');
@@ -117,6 +123,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('adds right tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
+    cy.contains('null').should('not.exist');
     cy.get('input[name=metalTag(right)]').type('rightTag');
     cy.get('input[id=setMetalTags]').click();
     cy.contains('Action results');
@@ -125,6 +132,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('adds left and right tags for tracking', function(){
     cy.get('button[id=editTracking]').click();
+    cy.contains('null').should('not.exist');
     cy.get('input[name=metalTag(left)]').type('leftTag');
     cy.get('input[name=metalTag(right)]').type('rightTag');
     cy.get('input[id=setMetalTags]').click();
@@ -134,6 +142,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('adds acoustic tag', function(){
     cy.get('button[id=editTracking]').click();
+    cy.contains('null').should('not.exist');
     cy.get('input[id=acousticTagInput]').type('acousticTagSerial123');
     cy.get('input[id=acousticTagId]').type('acousticTagId123');
     cy.get('input[id=setAcousticTags]').click();
@@ -143,6 +152,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('adds satellite tag', function(){
     cy.get('button[id=editTracking]').click();
+    cy.contains('null').should('not.exist');
     cy.get('select[name=satelliteTagName]').select('Wild Life Computers', {force: true});
     cy.get('input[id=satelliteTagSerial]').type('satelliteTagSerial123');
     cy.get('input[id=satelliteTagArgosPttNumber]').type('satelliteTagId123');
@@ -153,6 +163,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('edits observation attributes', function(){
     cy.get('button[id=editObservation]').click();
+    cy.contains('null').should('not.exist');
     cy.get('#genusSpecies').select('Physeter macrocephalus', {force: true});
     cy.get('input[id=taxBtn]').click();
     cy.get('#livingStatus').select('dead', {force: true});
@@ -174,5 +185,25 @@ describe('Wildbook instance encounter page', function() {
     cy.get('button[id=closeEditObservation]').click();
   });
 
-  
+  it('dynamic properties don’t display null', function(){
+    cy.get('input[id=editObservations]').click();
+    cy.contains('null').should('not.exist');
+  });
+
+  it('adds dynamic property', function(){
+    cy.get('input[id=editObservations]').click();
+    cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
+    cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
+    cy.get('input[id=addDynPropBtn]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+  it('edits existing dynamic property', function(){
+    cy.get('input[id=editObservations]').click();
+    cy.get('input[id=dynInput]').first().type('Giggles when you tickle it.');
+    cy.get('input[id=dynEdit]').first().click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
 });

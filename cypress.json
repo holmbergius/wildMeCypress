@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://www.flukebook.org",
+  "baseUrl": "http://localhost:8080/wildbook/",
   "pageLoadTimeout": 60000
 }
