@@ -81,7 +81,7 @@ describe('Wildbook instance encounter page', function() {
   });
 
   it('creates and then deletes encounter', function(){
-    cy.createAndNavigateToEncounter();
+    cy.createAndNavigateToEncounterFlukeBook();
     cy.get('input[id=editMeta]').click();
     cy.get('input[id=deleteButton]').click();
     Cypress.on('window:confirm', (err, runnable) => {
