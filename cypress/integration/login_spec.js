@@ -23,7 +23,8 @@ describe('Wildbook instance login page', function() {
   it('navigates to welcome.jsp on successful login', function(){
     cy.get('input[name=username]').type('atticus29'); //TODO put username in a better place
     cy.get('input[name=password]').type('FPython!11'); //TODO put password in a better place
-    cy.get('input[type=submit]').click(); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
+    cy.get('form').first().submit();
+    // cy.get('input[type=submit]').click({ force: true }); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
     cy.contains('Database login').should('not.exist');
     cy.hash().should('eq','welcome.jsp');
   });

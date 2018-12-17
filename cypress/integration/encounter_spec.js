@@ -45,6 +45,45 @@ describe('Wildbook instance encounter page', function() {
     //TODO LEFT OFF HERE
   });
 
+   it('create occurrence and associate current encounter with it', function(){
+     cy.get('button[id=editIdentity]').click();
+     cy.get('input[id=createOccurrenceInput]').type('testOccurence123');
+     cy.get('input[id=createOccur]').click();
+   });
+
+   it('add current encounter to known occurence', function(){
+     cy.get('button[id=editIdentity]').click();
+     cy.get('input[id=add2OccurrenceInput]').type('knownOccurence123'); //TODO do I have to find a real occurence that I can mess with?
+     cy.get('input[id=addOccurrence]').click();
+     cy.get('button[id=closeEditIdentity]').click();
+   });
+
+   it('edits contact info', function(){
+    cy.get('button[id=editContactBtn]').click();
+    cy.contains('Submitter').should('not.exist');
+    //TODO there is a bug here, but I don't know how to fail it. FIX
+  });
+
+  it('tests whether metadata should not have two assign to user', function(){
+    cy.get('input[id=Assign]').should('not.exist');
+    //TODO there is a bug here, but I don't know how to fail it. FIX
+  });
+
+  it('edits metadata', function(){
+    cy.get('input[id=editMeta]').click();
+    cy.get('#selectState').select('unapproved', {force: true});
+    cy.get('input[id=editWork]').click();
+    cy.get('#submitterSelect').select('atticus29', {force: true});
+    cy.get('input[id=Assign]').click();
+    cy.get('input[id=tapirApprove]').click();
+  });
+
+  it('tests whether tapir link is dead', function(){
+    cy.get('input[id=editMeta]').click();
+    cy.get('a[href=nulltapirlink]').click();
+    cy.contains('404');
+  });
+
   it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
