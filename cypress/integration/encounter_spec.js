@@ -1,6 +1,7 @@
 describe('Wildbook instance encounter page', function() {
   beforeEach(()=>{
-    //TODO login
+    //TODO login is broken!
+    cy.login();
     cy.visit('https://www.flukebook.org/encounters/encounter.jsp?number=07786da3-eda5-4569-a3b6-0566e3b74629');
   });
 
@@ -33,7 +34,6 @@ describe('Wildbook instance encounter page', function() {
     cy.get('input[id=Add]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
-    //TODO LEFT OFF HERE
   });
 
   it('can edit identity and create new marked individual', function(){
@@ -42,7 +42,6 @@ describe('Wildbook instance encounter page', function() {
     cy.get('input[id=createSharkBtn]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
-    //TODO LEFT OFF HERE
   });
 
    it('create occurrence and associate current encounter with it', function(){
@@ -75,16 +74,65 @@ describe('Wildbook instance encounter page', function() {
     cy.get('input[id=editWork]').click();
     cy.get('#submitterSelect').select('atticus29', {force: true});
     cy.get('input[id=Assign]').click();
-    cy.get('input[id=tapirApprove]').click();
+    cy.get('input[id=tapirApprove]').click(); //TODO dare I go into this spooky old tree?
+    cy.get('textarea[id=autoComments]').type('this is a cypress test comment');
+    cy.get('input[id=manualAdd]').click();
+  });
+
+  it('creates and then deletes encounter', function(){
+    cy.createAndNavigateToEncounter();
+    cy.get('input[id=editMeta]').click();
+    cy.get('input[id=deleteButton]').click();
+    Cypress.on('window:confirm', (err, runnable) => {
+      // return true; //TODO necessary?
+    });
+    cy.contains('I have removed encounter');
   });
 
   it('tests whether tapir link is dead', function(){
     cy.get('input[id=editMeta]').click();
-    cy.get('a[href=nulltapirlink]').click();
+    cy.get('a[href=nulltapirlink]').click(); //TODO will this work?
     cy.contains('404');
   });
 
   it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
+  });
+
+  it('adds water temperature and salinity', function(){
+    cy.get('input[id=measurementEvent0]').type('11');
+    cy.get('input[id=measurementEvent1]').type('35');
+    cy.get('input[id=addMeasurements]').click();
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+
+  it('adds left tag for tracking', function(){
+    cy.get('button[id=editTracking]').click();
+    cy.get('input[name=metalTag(left)]').type('leftTag');
+    cy.get('input[id=setMetalTags]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+  it('adds right tag for tracking', function(){
+    cy.get('button[id=editTracking]').click();
+    cy.get('input[name=metalTag(right)]').type('rightTag');
+    cy.get('input[id=setMetalTags]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+  it('adds left and right tags for tracking', function(){
+    cy.get('button[id=editTracking]').click();
+    cy.get('input[name=metalTag(left)]').type('leftTag');
+    cy.get('input[name=metalTag(right)]').type('rightTag');
+    cy.get('input[id=setMetalTags]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+  it('adds acoustic tag', function(){
+    //LEFT OFF HERE
   });
 });
