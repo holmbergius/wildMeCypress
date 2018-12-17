@@ -133,6 +133,46 @@ describe('Wildbook instance encounter page', function() {
   });
 
   it('adds acoustic tag', function(){
-    //LEFT OFF HERE
+    cy.get('button[id=editTracking]').click();
+    cy.get('input[id=acousticTagInput]').type('acousticTagSerial123');
+    cy.get('input[id=acousticTagId]').type('acousticTagId123');
+    cy.get('input[id=setAcousticTags]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
   });
+
+  it('adds satellite tag', function(){
+    cy.get('button[id=editTracking]').click();
+    cy.get('select[name=satelliteTagName]').select('Wild Life Computers', {force: true});
+    cy.get('input[id=satelliteTagSerial]').type('satelliteTagSerial123');
+    cy.get('input[id=satelliteTagArgosPttNumber]').type('satelliteTagId123');
+    cy.get('input[id=setSatelliteTags]').click();
+    cy.contains('Action results');
+    cy.get('a').click(); //TODO how to access this view encounter link?
+  });
+
+  it('edits observation attributes', function(){
+    cy.get('button[id=editObservation]').click();
+    cy.get('#genusSpecies').select('Physeter macrocephalus', {force: true});
+    cy.get('input[id=taxBtn]').click();
+    cy.get('#livingStatus').select('dead', {force: true});
+    cy.get('input[id=addStatus]').click();
+    cy.get('#selectSex').select('male', {force: true});
+    cy.get('input[id=addSex]').click();
+    cy.get('textarea[id=scarInput]').type('noticeable scars from a terrifying fight with a giant squid. This whale saved my life!');
+    cy.get('input[id=addScar]').click();
+    cy.get('textarea[id=behaviorInput]').type('Really seemed to dislike things that look like cephalopods');
+    cy.get('input[id=editBehavior]').click();
+    cy.get('textarea[id=groupRoleInput]').type('Not a team player');
+    cy.get('input[id=editGroupRole]').click();
+    cy.get('#colorCode').select('5U', {force: true});
+    cy.get('input[id=editPattern]').click();
+    cy.get('#lifeStage').select('adult', {force: true});
+    cy.get('input[id=addLife]').click();
+    cy.get('textarea[id=commentInput]').type('Thanks for saving me, buddy!');
+    cy.get('input[id=editComment]').click();
+    cy.get('button[id=closeEditObservation]').click();
+  });
+
+  
 });
