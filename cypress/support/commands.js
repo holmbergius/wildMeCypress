@@ -1,6 +1,16 @@
+Cypress.Commands.add("findAndNavigateToFirstUnapprovedPortlandEncounter", ()=>{
+  cy.visit('/encounters/searchResults.jsp?state=unapproved');
+  cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000})
+  cy.get('input[id=filter-text]').type('portland{enter}');
+  cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000}).should('have.attr', 'title')
+  .then((title)=>{
+    cy.visit('/encounters/encounter.jsp?number=' + title.replace("Encounter ", ""));
+  });
+});
+
 Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
   cy.visit('/encounters/searchResults.jsp?state=unapproved');
-  cy.get('#results-table > tbody > tr:nth-child(1)').should('have.attr', 'title')
+  cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000}).should('have.attr', 'title')
   .then((title)=>{
     cy.visit('/encounters/encounter.jsp?number=' + title.replace("Encounter ", ""));
   });
@@ -51,7 +61,7 @@ Cypress.Commands.add("loginProgrammatically", () => {
 Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
   cy.login();
   cy.visit('/submit.jsp');
-  cy.get('input[id=datepicker]').type('2014-01-05 12:30');
+  cy.get('input[id=datepicker]').type(new Date().toString());
   cy.get('input[id=location]').type('a pineapple under the sea');
   cy.get('#locationID').select('1', {force: true});
   cy.get('input[id=lat]').type('45.590491');
@@ -69,12 +79,12 @@ Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
-  cy.login();
+  cy.loginProgrammatically();
   cy.visit('/submit.jsp');
-  cy.get('input[id=datepicker]').type('2014-01-05 12:30');
+  cy.get('input[id=datepicker]').type(new Date().toString());
   cy.get('input[id=location]').type('a pineapple under the sea');
-  cy.get('input[id=locationID]').type('Study Site 1');
-  cy.get('#locationID').select('United States', {force: true});
+  cy.get('#locationID').select('Study Site 1', {force:true});
+  cy.get('#country').select('United States', {force: true});
   cy.get('input[id=lat]').type('45.590491');
   cy.get('input[id=longitude]').type('-122.72125829999997');
   cy.get('input[id=depth]').type('3');
@@ -85,9 +95,15 @@ Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
   cy.get('input[id=submitterOrganization]').type('Self');
   cy.get('input[id=submitterProject]').type('PersonalLifeList');
   cy.get('textarea[id=comments]').type('This is a lot of text fields');
-  cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
-  cy.get('form[id=encounterForm]').submit();
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
+  cy.get('button').contains('Send encounter report').click();
+  // cy.get('form[id=encounterForm]').submit();
+  cy.wait(30000);
+  let encounterId = cy.get('a').contains('View encounter').invoke('text').toString();
+  cy.log(encounterId);
+  // encounterId = encounterId.replace("View encounter ","");
+  // cy.visit('https://www.flukebook.org/encounters/encounter.jsp?number=' + encounterNum);
+  // cy.findAndNavigateToFirstUnapprovedPortlandEncounter();
 });
 
 Cypress.Commands.add("logout", ()=>{

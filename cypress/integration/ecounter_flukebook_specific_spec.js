@@ -1,17 +1,17 @@
 describe('Wildbook instance encounter page', function() {
   beforeEach(()=>{
     cy.logout();
-    cy.loginProgrammatically();
-    cy.findAndNavigateToFirstUnapprovedEncounter();
+    cy.loginProgrammatically(); //TODO can speed this up still
+    cy.findAndNavigateToFirstUnapprovedPortlandEncounter(); //TODO can speed this up still
   });
 
-  it('displays some known text in encounter.jsp', function(){
+  it.skip('displays some known text in encounter.jsp', function(){
     cy.contains('Location');
     cy.contains('Date');
     cy.contains('Gallery');
   });
 
-  it('can edit location', function(){
+  it.skip('can edit location', function(){
     cy.get('button[id=editLocation]').click();
     cy.get('textarea[name=location]').type('Vancouver, WA');
     cy.get('input[id=addLocation]').click();
@@ -28,6 +28,7 @@ describe('Wildbook instance encounter page', function() {
   });
 
   it('can add to marked individual', function(){
+    cy.createAndNavigateToEncounterFlukeBook();
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true}); //TODO add real whale name here
     cy.get('#matchType').select('Pattern match', {force: true});

@@ -1,6 +1,6 @@
 describe('Flukebook specific encounter submission page', function() {
   beforeEach(()=>{
-    cy.login();
+    cy.loginProgrammatically();
     cy.visit('/submit.jsp');
   });
 
@@ -22,10 +22,9 @@ describe('Flukebook specific encounter submission page', function() {
     cy.get('input[id=photographerEmail]').type('Someguy.imetonthestreet@gmail.com');
     cy.get('input[id=submitterOrganization]').type('Self');
     cy.get('input[id=submitterProject]').type('PersonalLifeList');
-    cy.get('input[id=comments]').type('This is a lot of text fields');
-    cy.get('input[id=comments]').type('This is a lot of text fields');
-    cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
-    cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of the captcha stuff
+    cy.get('textarea[id=comments]').type('This is a lot of text fields');
+    cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
+    cy.get('form[id=encounterForm]').submit(); //TODO this doesn't work for the same reasons that the login form submission didn't work
     cy.hash().should('match', '/confirmSubmit/');
     // cy.hash().should('eq','') //TODO new URL starts with confirmSubmit.jsp but then has ?number= something dynamic that I'm not sure how to access from the front end
     // cy.contains('Success'); //TODO not best practice but above statement was too complex
@@ -48,7 +47,7 @@ describe('Flukebook specific encounter submission page', function() {
     cy.get('input[id=submitterOrganization]').type('Self');
     cy.get('input[id=submitterProject]').type('PersonalLifeList');
     cy.get('textarea[id=comments]').type('This is a lot of text fields');
-    cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
+    cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
     cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of the captcha stuff
     cy.url().should('match', /confirmSubmit/);
   });
@@ -68,7 +67,7 @@ describe('Flukebook specific encounter submission page', function() {
     cy.get('input[id=submitterOrganization]').type('Self');
     cy.get('input[id=submitterProject]').type('PersonalLifeList');
     cy.get('textarea[id=comments]').type('This is a lot of text fields');
-    cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
+    cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
     cy.get('button[id=submitEncounterButton]').click();
     cy.url().should('not.match', /confirmSubmit/);
   });
@@ -89,7 +88,7 @@ describe('Flukebook specific encounter submission page', function() {
     cy.get('input[id=submitterOrganization]').type('Self');
     cy.get('input[id=submitterProject]').type('PersonalLifeList');
     cy.get('textarea[id=comments]').type('This is a lot of text fields');
-    cy.get('#genusSpecies').select('Megapter novaeangliae', {force: true});
+    cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
     //TODO find a way to click the advanced info button (push a change with an id to the wildbook repo?)
   });
 
