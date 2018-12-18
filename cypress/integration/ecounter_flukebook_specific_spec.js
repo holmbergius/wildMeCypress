@@ -5,20 +5,19 @@ describe('Wildbook instance encounter page', function() {
     cy.findAndNavigateToFirstUnapprovedEncounter();
   });
 
-  it.skip('displays some known text in encounter.jsp', function(){
+  it('displays some known text in encounter.jsp', function(){
     cy.contains('Location');
     cy.contains('Date');
     cy.contains('Gallery');
   });
 
-  it.skip('can edit location', function(){
+  it('can edit location', function(){
     cy.get('button[id=editLocation]').click();
     cy.get('textarea[name=location]').type('Vancouver, WA');
     cy.get('input[id=addLocation]').click();
     cy.get('#selectCountry').select('United States', {force: true});
     cy.get('input[id=countryFormBtn]').click();
-    cy.get('#selectCode').select('1', {force: true}); //TODO disable for flukebook specific
-    // cy.get('#selectCode').select('Study Site 1', {force: true}); //TODO enable for flukebook specific
+    cy.get('#selectCode').select('Study Site 1', {force: true});
     cy.get('input[id=setLocationBtn]').click();
     cy.get('input[id=depthInput]').type('1');
     cy.get('input[id=AddDepth]').click();
@@ -28,7 +27,7 @@ describe('Wildbook instance encounter page', function() {
     cy.get('button[id=closeEditLocation]').click();
   });
 
-  it.skip('can edit identity and add to marked individual', function(){
+  it('can edit identity and add to marked individual', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true}); //TODO add real whale name here
     cy.get('#matchType').select('Pattern match', {force: true});
@@ -39,8 +38,7 @@ describe('Wildbook instance encounter page', function() {
 
   it('can edit identity and create new marked individual', function(){
     cy.get('button[id=editIdentity]').click();
-    cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true}); //TODO shark Individual Seems Like An Old Name
-    cy.get('#matchType').select('Pattern match', {force: true});
+    cy.get('input[id=createSharkIndividual]').type('frumpy', {force:true}); //TODO shark Individual Seems Like An Old Name
     cy.get('input[id=createSharkBtn]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();

@@ -1,4 +1,4 @@
-describe('Wildbook instance login page', function() {
+describe('Flukebook specific encounter submission page', function() {
   beforeEach(()=>{
     cy.login();
     cy.visit('/submit.jsp');
@@ -12,7 +12,7 @@ describe('Wildbook instance login page', function() {
     cy.get('input[id=datepicker]').type('2014-01-05 12:30');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
-    cy.get('#countryID').select('United States', {force: true});
+    cy.get('#country').select('United States', {force: true});
     cy.get('input[id=lat]').type('45.590491');
     cy.get('input[id=longitude]').type('-122.72125829999997');
     cy.get('input[id=depth]').type('3');
@@ -37,7 +37,7 @@ describe('Wildbook instance login page', function() {
     cy.get('input[id=datepicker]').type('2014-01-05 12:30');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
-    cy.get('#countryID').select('United States', {force: true});
+    cy.get('#country').select('United States', {force: true});
     cy.get('input[id=lat]').type('45.590491');
     cy.get('input[id=longitude]').type('-122.72125829999997');
     cy.get('input[id=depth]').type('3');
@@ -57,7 +57,7 @@ describe('Wildbook instance login page', function() {
     cy.get('input[id=datepicker]').type('2014-01-05 12:30');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
-    cy.get('#countryID').select('United States', {force: true});
+    cy.get('#country').select('United States', {force: true});
     cy.get('input[id=lat]').type('45.590491');
     cy.get('input[id=longitude]').type('-122.72125829999997');
     cy.get('input[id=depth]').type('3');
@@ -78,7 +78,7 @@ describe('Wildbook instance login page', function() {
     cy.get('input[id=datepicker]').type('2014-01-05 12:30');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
-    cy.get('#countryID').select('United States', {force: true});
+    cy.get('#country').select('United States', {force: true});
     cy.get('input[id=lat]').type('45.590491');
     cy.get('input[id=longitude]').type('-122.72125829999997');
     cy.get('input[id=depth]').type('3');

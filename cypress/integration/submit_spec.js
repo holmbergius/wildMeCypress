@@ -1,4 +1,4 @@
-describe('Wildbook instance login page', function() {
+describe('Generic wildbook instance encounter submission page', function() {
   beforeEach(()=>{
     cy.login();
     cy.visit('/submit.jsp');

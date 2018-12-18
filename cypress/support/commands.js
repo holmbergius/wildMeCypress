@@ -1,3 +1,11 @@
+Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
+  cy.visit('/encounters/searchResults.jsp?state=unapproved');
+  cy.get('#results-table > tbody > tr:nth-child(1)').should('have.attr', 'title')
+  .then((title)=>{
+    cy.visit('/encounters/encounter.jsp?number=' + title.replace("Encounter ", ""));
+  });
+});
+
 Cypress.Commands.add("login", () => {
   //TODO could shorten test times with cy.request
   // cy.request({
@@ -16,10 +24,14 @@ Cypress.Commands.add("login", () => {
   cy.visit('/logout.jsp');
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
+  // cy.get('input[name=username]').type('atticus29'); //TODO put username in a better place
+  // cy.get('input[name=password]').type('FPython!11'); //TODO put password in a better place
+  // "baseUrl": "https://www.flukebook.org", for cypress.json
   cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
-  cy.get('input[name=password]').type('tomcat123{enter}'); //TODO put password in a better place
-  // cy.get('form').first().submit(); //TODO FIX
-  cy.url().should('match',/welcome/);
+  cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
+  cy.get('input[id=logMeIn]').click();
+  // cy.get('form[id=logMeInForm]').submit(); //TODO FIX
+  cy.url().should('match',/welcome\.jsp/);
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{

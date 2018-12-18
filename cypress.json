@@ -1,4 +1,4 @@
 {
-  "baseUrl": "http://localhost:8080/wildbook/",
+  "baseUrl": "http://localhost:8080/wildbook",
   "pageLoadTimeout": 60000
 }
