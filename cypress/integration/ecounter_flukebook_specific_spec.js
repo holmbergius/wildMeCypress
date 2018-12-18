@@ -1,7 +1,7 @@
 describe('Wildbook instance encounter page', function() {
   beforeEach(()=>{
-    //TODO login is broken!
-    cy.login();
+    cy.logout();
+    cy.loginProgrammatically();
     cy.findAndNavigateToFirstUnapprovedEncounter();
   });
 

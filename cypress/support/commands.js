@@ -6,6 +6,10 @@ Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
   });
 });
 
+Cypress.Commands.add("logout", ()=>{
+  cy.visit('/logout.jsp');
+});
+
 Cypress.Commands.add("login", ()=>{
   cy.visit('/logout.jsp');
   cy.visit('/login.jsp');
