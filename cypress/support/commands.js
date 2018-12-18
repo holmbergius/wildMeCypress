@@ -6,21 +6,7 @@ Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
   });
 });
 
-Cypress.Commands.add("login", () => {
-  //TODO could shorten test times with cy.request
-  // cy.request({
-  //   method: 'POST',
-  //   url: 'halp',
-  //   body: {
-  //     user: {
-  //       username: 'atticus29',
-  //       password: 'myPW',
-  //     }
-  //   }
-  // })
-  // .then((resp)=>{
-  //   window.localStorage.setItem('halp', resp.body.user.token);
-  // });
+Cypress.Commands.add("login", ()=>{
   cy.visit('/logout.jsp');
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
@@ -29,9 +15,33 @@ Cypress.Commands.add("login", () => {
   // "baseUrl": "https://www.flukebook.org", for cypress.json
   cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
   cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
+  // "baseUrl": "http://localhost:8080/wildbook",
   cy.get('input[id=logMeIn]').click();
-  // cy.get('form[id=logMeInForm]').submit(); //TODO FIX
+  cy.get('form[id=logMeInForm]').submit(); //TODO FIX
   cy.url().should('match',/welcome\.jsp/);
+});
+
+Cypress.Commands.add("loginProgrammatically", () => {
+  cy.request({
+    method: 'POST',
+    url: 'https://www.flukebook.org/LoginUser',
+    form: true,
+    body: {
+      username:'atticus29',
+      password:'FPython!11'
+    }
+  })
+  .then((resp)=>{
+    expect(resp.status).to.eq(200);
+    cy.log(resp.requestHeaders.cookie);
+    // window.localStorage.setItem('flukebook_login_cookie', resp.requestHeaders.cookie);
+  });
+  // cy.visit('/welcome.jsp',{
+    // onBeforeLoad: function(win){
+    //   win.localStorage.setItem('flukebook_login_cookie', flukebook_login_cookie);
+    // }
+  // })
+  // cy.visit('/welcome.jsp');
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
@@ -39,8 +49,7 @@ Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
   cy.visit('/submit.jsp');
   cy.get('input[id=datepicker]').type('2014-01-05 12:30');
   cy.get('input[id=location]').type('a pineapple under the sea');
-  cy.get('input[id=locationID]').type('Study Site 1');
-  cy.get('#locationID').select('United States', {force: true});
+  cy.get('#locationID').select('1', {force: true});
   cy.get('input[id=lat]').type('45.590491');
   cy.get('input[id=longitude]').type('-122.72125829999997');
   cy.get('input[id=depth]').type('3');
@@ -52,8 +61,7 @@ Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
   cy.get('input[id=submitterProject]').type('PersonalLifeList');
   cy.get('textarea[id=comments]').type('This is a lot of text fields');
   cy.get('button[id=submitEncounterButton]').click();
-  // cy.get('form[id=encounterForm]').submit();
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.findAndNavigateToFirstUnapprovedEncounter();
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{

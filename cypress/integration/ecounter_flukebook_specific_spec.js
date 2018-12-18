@@ -27,30 +27,41 @@ describe('Wildbook instance encounter page', function() {
     cy.get('button[id=closeEditLocation]').click();
   });
 
-  it('can edit identity and add to marked individual', function(){
+  it('can add to marked individual', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true}); //TODO add real whale name here
     cy.get('#matchType').select('Pattern match', {force: true});
     cy.get('input[id=Add]').click({force: true});
-    cy.get('input[id=alternateid]').type('frumpy123');
-    cy.get('input[id=setAltIDbtn]').click();
+    cy.get('button[id=closeEditIdentity]').click();
+    cy.contains('frumpy');
   });
 
-  it('can edit identity and create new marked individual', function(){
+  it('can create marked individual', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=createSharkIndividual]').type('frumpy', {force:true}); //TODO shark Individual Seems Like An Old Name
     cy.get('input[id=createSharkBtn]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
+    cy.get('button[id=closeEditIdentity]').click();
+    cy.contains('frumpy123');
   });
 
-   it('create occurrence and associate current encounter with it', function(){
+  it.skip('add alternate id', function(){
+    //TODO why not clickable
+    //TODO update createAndNavigateToEncounterFlukeBook and change here
+    cy.get('button[id=editIdentity]').click();
+    cy.get('input[id=alternateid]').type('frumpy123');
+    cy.get('input[id=setAltIDbtn]').click();
+  });
+
+   it.skip('creates occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      cy.get('input[id=createOccurrenceInput]').type('testOccurence123');
      cy.get('input[id=createOccur]').click();
+     //TODO add assert
    });
 
-   it('add current encounter to known occurence', function(){
+   it('adds to occurence', function(){
      cy.get('button[id=editIdentity]').click();
      cy.get('input[id=add2OccurrenceInput]').type('knownOccurence123'); //TODO do I have to find a real occurence that I can mess with?
      cy.get('input[id=addOccurrence]').click();

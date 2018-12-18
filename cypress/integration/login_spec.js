@@ -9,10 +9,19 @@ describe('Wildbook instance login page', function() {
       done()
       return false
     });
+    let username = 'tomcat';
+    let password = 'tomcat123';
   });
+
+  // it('successfully logs in programmatically', function(){
+  //   cy.loginProgrammatically();
+  //   cy.visit('/welcome.jsp');
+  //   cy.url().should('match',/welcome\.jsp/);
+  // });
 
   it('greets with sign in', function() {
     cy.contains('Database login');
+    cy.log("Testing testing");
   });
 
   it('cannot visit welcome page before logging in', function(){
@@ -20,36 +29,21 @@ describe('Wildbook instance login page', function() {
     cy.contains('Database login').should('exist');
   });
 
-  it('navigates to welcome.jsp on successful login', function(){
-    cy.login();
-    // cy.get('input[name=username]').type('atticus29'); //TODO put username in a better place
-    // cy.get('input[name=password]').type('FPython!11'); //TODO put password in a better place
-    // // cy.get('form').first().submit();
-    // cy.get('input[type=submit]').click({ force: true }); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
-    // cy.contains('Database login').should('not.exist');
-    // cy.hash().should('eq','welcome.jsp');
-  });
-
   it('requires username', function(){
     cy.get('input[name=username]').type('atticus29{enter}'); //TODO put username in a better place
-    // cy.get('input[name=username]').type('atticus29{enter}'); //TODO put username in a better place TODO this enter should work but doesn't
-    // cy.get('form[action=LoginUser]').submit(); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist'); //TODO this currently takes you to an encounter page and then displays Request collaboration with Shane Gero??
-    // cy.get('input[value=Cancel]').click();
   });
 
   it('requires password', function(){
     cy.get('input[name=password]').type('FPython!11{enter}'); //TODO put password in a better place
-    // cy.get('form[action=LoginUser]').submit(); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
 
   it('requires valid username and password', function(){
-    cy.get('input[name=username]').type('atticus2'); //TODO put username in a better place
-    cy.get('input[name=password]').type('FPyth11{enter}'); //TODO put password in a better place
-    // cy.get('for[action=LoginUser]m').submit(); //TODO brittle if they add more forms but forms don't have ids currently in login.jsp
+    cy.get('input[name=username]').type(username); //TODO put username in a better place
+    cy.get('input[name=password]').type(password); //TODO put password in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
