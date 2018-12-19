@@ -209,4 +209,8 @@ describe('Wildbook instance encounter page', function() {
     cy.contains('Action results');
     cy.get('a').click(); //TODO how to access this view encounter link?
   });
+
+  it('adds biological sample', function(){
+    cy.get('a[class=addBioSample]').click(); //TODO ?
+  });
 });

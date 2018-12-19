@@ -1,3 +1,32 @@
+Cypress.Commands.add("form_request", (url, formData) => {
+  cy.log("Got into form_request");
+  // cy.on('uncaught:exception', (err, runnable) => {
+  // expect(err.message).to.include('of undefined')
+  //   done()
+  //   return false
+  // });
+    return cy
+      // .on('uncaught:exception', (err, runnable) => {
+      // expect(err.message).to.include('of undefined')
+      //   done()
+      //   return false
+      // })
+      // .server()
+      // .route("POST", url)
+      // .as("formRequest");
+      .server()
+      .route("POST", url)
+      .as("formRequest")
+      .window()
+      .then((win) => {
+        let xhr = new win.XMLHttpRequest();
+        xhr.open(method, url);
+        // xht.setRequestHeader("content-type", "multipart/form-data");
+        xhr.send(formData);
+      })
+      .wait("@formRequest");
+});
+
 Cypress.Commands.add("findAndNavigateToFirstUnapprovedPortlandEncounter", ()=>{
   cy.visit('/encounters/searchResults.jsp?state=unapproved');
   cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000})
