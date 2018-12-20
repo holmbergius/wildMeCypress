@@ -17,12 +17,12 @@
 import './commands'
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  Cy.log("Hi Mark Uncaught Exception");
-  debugger;
+  cy.log("Hi Mark Uncaught Exception");
+  // debugger;
   // returning false here prevents Cypress from
   // failing the test
-  // return false;
-  throw error;
+  return false;
+  // throw error;
 })
 
 // Alternatively you can use CommonJS syntax:

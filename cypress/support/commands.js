@@ -47,7 +47,7 @@ Cypress.Commands.add("login", ()=>{
   cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
   // "baseUrl": "http://localhost:8080/wildbook",
   cy.get('input[id=logMeIn]').click();
-  cy.get('form[id=logMeInForm]').submit(); //TODO FIX
+  // cy.get('form[id=logMeInForm]').submit(); //TODO FIX
   cy.url().should('match',/welcome\.jsp/);
 });
 
@@ -91,7 +91,9 @@ Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
   cy.get('input[id=submitterProject]').type('PersonalLifeList');
   cy.get('textarea[id=comments]').type('This is a lot of text fields');
   cy.get('button[id=submitEncounterButton]').click();
-  cy.findAndNavigateToFirstUnapprovedEncounter();
+  cy.url().should('match',/confirmSubmit/);
+  cy.get('a').contains('View encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{

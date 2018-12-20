@@ -67,14 +67,14 @@ describe('Wildbook instance encounter page tests that only need me to log in onc
 
    it.skip('creates occurrence', function(){
      cy.get('button[id=editIdentity]').click();
-     cy.get('input[id=createOccurrenceInput]').type('testOccurence123');
+     cy.get('input[id=createOccurrenceInput]').type('testOccurrence123');
      cy.get('input[id=createOccur]').click();
      //TODO add assert
    });
 
-   it.skip('adds to occurence', function(){
+   it.skip('adds to occurrence', function(){
      cy.get('button[id=editIdentity]').click();
-     cy.get('input[id=add2OccurrenceInput]').type('knownOccurence123'); //TODO do I have to find a real occurence that I can mess with?
+     cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
      cy.get('input[id=addOccurrence]').click();
      cy.get('button[id=closeEditIdentity]').click();
    });
@@ -87,7 +87,7 @@ describe('Wildbook instance encounter page tests that only need me to log in onc
 
   it.skip('tests whether metadata should not have two assign to user', function(){
     cy.get('input[id=Assign]').should('not.exist');
-    //TODO there is a bug here, but I don't know how to fail it. FIX
+    //TODO there is a bug here on flukebook, but I don't know how to fail it. FIX
   });
 
   it.skip('edits metadata', function(){
@@ -267,5 +267,5 @@ describe('Wildbook instance encounter page tests that only need me to log in onc
     cy.url().should('match',/EncounterSetTissueSample/);
     cy.contains('Action results');
   });
-
+//TODO add a delete encounter afterEach? after most?
 });
