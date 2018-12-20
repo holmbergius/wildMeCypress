@@ -15,6 +15,10 @@ describe('Wildbook instance encounter page tests that only need me to log in onc
   cy.findAndNavigateToFirstUnapprovedPortlandEncounter(); //TODO can speed this up still
 });
 
+it('tests whether createAndNavigateToEncounterFlukeBook works', function(){
+  cy.createAndNavigateToEncounterFlukeBook();
+});
+
 it.skip('displays some known text in encounter.jsp', function(){
   cy.contains('Location');
   cy.contains('Date');
@@ -258,7 +262,7 @@ it.skip('edits existing dynamic property', function(){
   cy.get('a').click(); //TODO how to access this view encounter link?
 });
 
-it('adds biological sample with minimal input', function(){
+it.skip('adds biological sample with minimal input', function(){
   cy.get('a').contains('Add biological sample').click();
   cy.get('input[name=sampleID]').first().type("bioSample123");
   cy.get('input[name=alternateSampleID]').type("bioSample123AltId");
@@ -271,7 +275,7 @@ it('adds biological sample with minimal input', function(){
   cy.contains('Action results');
 });
 
-it('adds biological sample with maximal input', function(){
+it.skip('adds biological sample with maximal input', function(){
   cy.on('uncaught:exception', (err, runnable) => {
     // expect(err.message).to.include('of undefined')
     // done()

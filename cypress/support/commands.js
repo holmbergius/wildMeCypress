@@ -115,10 +115,13 @@ Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
   cy.get('textarea[id=comments]').type('This is a lot of text fields');
   cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
   cy.get('button').contains('Send encounter report').click();
+  cy.url().should('match',/confirmSubmit/);
+  cy.get('a').contains('View encounter').click();
+  cy.url().should('match', /encounter.jsp/);
   // cy.get('form[id=encounterForm]').submit();
-  cy.wait(30000);
-  let encounterId = cy.get('a').contains('View encounter').invoke('text').toString();
-  cy.log(encounterId);
+  // cy.wait(30000);
+  // let encounterId = cy.get('a').contains('View encounter').invoke('text').toString();
+  // cy.log(encounterId);
   // encounterId = encounterId.replace("View encounter ","");
   // cy.visit('https://www.flukebook.org/encounters/encounter.jsp?number=' + encounterNum);
   // cy.findAndNavigateToFirstUnapprovedPortlandEncounter();
