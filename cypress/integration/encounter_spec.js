@@ -97,14 +97,15 @@ it.skip('edits metadata comments', function(){
     cy.get('input[id=manualAdd]').click();
   });
 
-it('creates and then deletes encounter', function(){
-    cy.createAndNavigateToEncounterWildbookGeneric();
-    cy.get('input[id=editMeta]').click();
+it.skip('creates and then deletes encounter', function(){
+    cy.get('button[id=editMeta]').click();
     cy.get('input[id=deleteButton]').click();
     Cypress.on('window:confirm', (err, runnable) => {
-      // return true; //TODO necessary? TODO I suspect this may not work
     });
+    cy.url().should('match',/EncounterDelete/);
     cy.contains('I have removed encounter');
+    cy.go('back');
+    cy.contains('There is no corresponding encounter number in the database');
   });
 
 it.skip('should not contain null text', function() {
