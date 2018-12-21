@@ -1,19 +1,15 @@
+//TODO test all of these again
 describe('Wildbook instance encounter page tests that only need me to log in once', function() {
-  // before(function() {
-  //   cy.logout();
-  //   cy.loginProgrammatically();
-  // });
   beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
-  // cy.createAndNavigateToEncounterFlukeBook();
-  cy.on('uncaught:exception', (err, runnable) => {
-    expect(err.message).to.include('of undefined')
-    done()
-    return false
-  });
   cy.logout();
   cy.loginProgrammatically();
-  cy.findAndNavigateToFirstUnapprovedPortlandEncounter(); //TODO can speed this up still
+  cy.createAndNavigateToEncounterFlukeBook();
+  // cy.findAndNavigateToFirstUnapprovedPortlandEncounter(); //TODO can speed this up still
 });
+
+afterEach(function () {
+  cy.deleteEncounterFlukebook();
+})
 
 it('tests whether createAndNavigateToEncounterFlukeBook works', function(){
   cy.createAndNavigateToEncounterFlukeBook();
@@ -62,18 +58,20 @@ it.skip('can create marked individual', function(){
 });
 
 it.skip('add alternate id', function(){
-  //TODO why not clickable
-  //TODO update createAndNavigateToEncounterFlukeBook and change here
   cy.get('button[id=editIdentity]').click();
   cy.get('input[id=alternateid]').type('frumpy123');
   cy.get('input[id=setAltIDbtn]').click();
+  cy.get('button[id=closeEditIdentity]').click();
+  cy.contains('frumpy123').should('exist');
 });
 
 it.skip('creates occurrence', function(){
   cy.get('button[id=editIdentity]').click();
-  cy.get('input[id=createOccurrenceInput]').type('testOccurrence123');
+  let randomNumString = Math.random().toString()
+  cy.get('input[id=createOccurrenceInput]').type('testOccurrence123' + randomNumString);
   cy.get('input[id=createOccur]').click();
-  //TODO add assert
+  cy.get('button[id=closeEditIdentity]').click();
+  cy.contains(/Occurrence ID:\s*testOccurrence/).should('exist');
 });
 
 it.skip('adds to occurrence', function(){
@@ -81,6 +79,7 @@ it.skip('adds to occurrence', function(){
   cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
   cy.get('input[id=addOccurrence]').click();
   cy.get('button[id=closeEditIdentity]').click();
+  //TODO add assert
 });
 
 it.skip('edits contact info', function(){
@@ -133,18 +132,6 @@ it.skip('edits metadata comments', function(){
   cy.get('input[id=manualAdd]').click();
 });
 
-it.skip('creates and then deletes encounter', function(){
-  cy.get('button[id=editMeta]').click();
-  cy.get('input[id=deleteButton]').click();
-  Cypress.on('window:confirm', (err, runnable) => {
-  });
-  cy.url().should('match',/EncounterDelete/);
-  cy.contains('I have removed encounter');
-  cy.go('back');
-  cy.contains('There is no corresponding encounter number in the database');
-});
-
-
 it.skip('tests whether tapir link is dead', function(){
   cy.get('button[id=editMeta]').click();
   cy.contains('null').should('not.exist');
@@ -163,7 +150,8 @@ it.skip('adds water temperature and salinity', function(){
   cy.get('input[id=measurementEvent1]').type('35');
   cy.get('input[id=addMeasurements]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 
@@ -173,7 +161,8 @@ it.skip('adds left tag for tracking', function(){
   cy.get('input[name=metalTag(left)]').type('leftTag');
   cy.get('input[id=setMetalTags]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('adds right tag for tracking', function(){
@@ -182,7 +171,8 @@ it.skip('adds right tag for tracking', function(){
   cy.get('input[name=metalTag(right)]').type('rightTag');
   cy.get('input[id=setMetalTags]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('adds left and right tags for tracking', function(){
@@ -192,7 +182,8 @@ it.skip('adds left and right tags for tracking', function(){
   cy.get('input[name=metalTag(right)]').type('rightTag');
   cy.get('input[id=setMetalTags]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('adds acoustic tag', function(){
@@ -202,7 +193,8 @@ it.skip('adds acoustic tag', function(){
   cy.get('input[id=acousticTagId]').type('acousticTagId123');
   cy.get('input[id=setAcousticTags]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('adds satellite tag', function(){
@@ -213,7 +205,8 @@ it.skip('adds satellite tag', function(){
   cy.get('input[id=satelliteTagArgosPttNumber]').type('satelliteTagId123');
   cy.get('input[id=setSatelliteTags]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('edits observation attributes', function(){
@@ -251,7 +244,8 @@ it.skip('adds dynamic property', function(){
   cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
   cy.get('input[id=addDynPropBtn]').click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('edits existing dynamic property', function(){
@@ -259,7 +253,8 @@ it.skip('edits existing dynamic property', function(){
   cy.get('input[id=dynInput]').first().type('Giggles when you tickle it.');
   cy.get('input[id=dynEdit]').first().click();
   cy.contains('Action results');
-  cy.get('a').click(); //TODO how to access this view encounter link?
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
 });
 
 it.skip('adds biological sample with minimal input', function(){
@@ -272,7 +267,10 @@ it.skip('adds biological sample with minimal input', function(){
     // return false
   });
   cy.get('input[name=EditTissueSample]').first().click();
-  cy.contains('Action results');
+  cy.url().should('match',/EncounterSetTissueSample/);
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
+  cy.contains(/Alternate Sample ID:\s*bioSample123AltId/).should('exist');
 });
 
 it.skip('adds biological sample with maximal input', function(){
@@ -299,6 +297,42 @@ it.skip('adds biological sample with maximal input', function(){
   cy.get('input[name=EditTissueSample]').first().click();
   cy.url().should('match',/EncounterSetTissueSample/);
   cy.contains('Action results');
+  cy.get('a').contains('Return to encounter').click();
+  cy.url().should('match', /encounter.jsp/);
+  cy.contains(/Collection code:\s*ws1/).should('exist');
+  cy.contains(/Collection ID:\s*whaleSearch1/).should('exist');
+  cy.contains(/Dataset ID:\s*summonedWhales/).should('exist');
+  cy.contains(/Dataset name:\s*Summoned Whales/).should('exist');
+  cy.contains(/Event remarks:\s*You would think this could bw in the field notes/).should('exist');
+  cy.contains(/Field number:\s*uncountable/).should('exist');
+  cy.contains(/Institution ID:\s*Hogwarts/).should('exist');
+  cy.contains(/Sampling effort:\s*maximal/).should('exist');
+  cy.contains(/Sampling protocol:\s*dark summoning/).should('exist');
+  cy.contains(/Alternate Sample ID:\s*bioSample123AltId/).should('exist');
+  cy.contains(/Preservation method:\s*watercolor painting/).should('exist');
+  cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
 });
-//TODO add a delete encounter afterEach? after most?
+
+});
+
+describe('Flukebook instance encounter page no delete after each', function() {
+  beforeEach(()=>{
+    cy.loginProgrammatically();
+    cy.createAndNavigateToEncounterFlukeBook();
+  });
+
+  it.skip('creates and then deletes encounter', function(){
+      cy.deleteEncounterFlukebook();
+      cy.url().should('match',/EncounterDelete/);
+      cy.contains('I have removed encounter');
+      cy.go('back');
+      cy.contains('There is no corresponding encounter number in the database');
+    });
+
+    it.skip('adds and removes adoption', function(){
+      cy.get('a').contains('Add adoption').click({timeout: 60000});
+      cy.get('p').contains('I could not find the adoption null').should('not.exist');
+      //TODO test whether this fails because of a bug like it does in generic wildbook
+      //TODO move out of Wildbook instance encounter page no delete after each after it starts passing
+    });
 });

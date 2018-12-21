@@ -41,24 +41,27 @@ it.skip('can set new or existing individual ID', function(){
     cy.contains('frumpy');
   });
 it.skip('add alternate id', function(){
-    //TODO why not clickable
-    cy.createAndNavigateToEncounterWildbookGeneric();
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
+    cy.get('button[id=closeEditIdentity]').click();
+    cy.contains('frumpy123').should('exist');
   });
-it.skip('creates occurrence', function(){
+it('creates occurrence', function(){
      cy.createAndNavigateToEncounterWildbookGeneric();
      cy.get('button[id=editIdentity]').click();
-     cy.get('input[id=createOccurrenceInput]').type('testOccurrence' + Math.random().toString());
+     let randomNumString = Math.random().toString()
+     cy.get('input[id=createOccurrenceInput]').type('testOccurrence' + randomNumString);
      cy.get('input[id=createOccur]').click();
-     //TODO add assert
+     cy.get('button[id=closeEditIdentity]').click();
+     cy.contains(/Occurrence ID:\s*testOccurrence/).should('exist');
    });
-it.skip('adds to occurrence', function(){
+it('adds to occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
      cy.get('input[id=addOccurrence]').click();
      cy.get('button[id=closeEditIdentity]').click();
+     //TODO add assert
    });
 it.skip('edits contact info', function(){
     cy.get('button[id=editContactBtn]').click();
@@ -196,33 +199,90 @@ it.skip('edits observation attributes', function(){
   });
 
 it.skip('dynamic properties don’t display null', function(){
-    cy.get('input[id=editObservations]').click();
+    //TODO I think in retrospect a stupid test
+    cy.get('button[id=editDynamic]').click();
     cy.contains('null').should('not.exist');
   });
 
 it.skip('adds dynamic property', function(){
-    cy.get('input[id=editObservations]').click();
+    cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
     cy.get('input[id=addDynPropBtn]').click();
     cy.contains('Action results');
     cy.get('a').contains('Return to encounter').click();
     cy.url().should('match', /encounter.jsp/);
+    cy.contains(/Mystery_Property_1:\s*Glows under fluorescent light/);
   });
 
-it.skip('edits existing dynamic property', function(){
-    cy.get('input[id=editObservations]').click();
-    cy.get('input[id=dynInput]').first().type('Giggles when you tickle it.');
-    cy.get('input[id=dynEdit]').first().click();
+it.skip('adds dynamic property and edits existing dynamic property', function(){
+    cy.get('button[id=editDynamic]').click();
+    cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
+    cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
+    cy.get('input[id=addDynPropBtn]').click();
     cy.contains('Action results');
     cy.get('a').contains('Return to encounter').click();
     cy.url().should('match', /encounter.jsp/);
+    cy.contains(/Mystery_Property_1:\s*Glows under fluorescent light/);
+    cy.get('button[id=editDynamic]').click();
+    cy.get('input[id=dynInput]').type('Giggles when you tickle it{enter}'); //TODO I think that this is another form nightmare
+    cy.url().should('match',/EncounterSetDynamicProperty/);
+    cy.contains('Action results');
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains('Giggles when you tickle it').should('exist');
   });
+
 it.skip('adds biological sample', function(){
-    cy.get('a[class=addBioSample]').click(); //TODO ?
+    cy.get('a').contains('Add biological sample').click();
+    cy.get('input[name=sampleID]').first().type("bioSample123");
+    cy.get('input[name=alternateSampleID]').first().type("bioSample123AltId");
+    cy.get('input[name=preservationMethod]').type('watercolor painting');
+    cy.get('input[name=storageLabID]').type('bioSample123Lab456');
+    cy.get('input[name=samplingProtocol]').type('dark summoning');
+    cy.get('input[name=samplingEffort]').type('maximal');
+    cy.get('input[name=fieldNumber]').type('uncountable');
+    cy.get('input[name=fieldNNotes]').type('Fred dropped the blood candles again. Thanks, Fred.');
+    cy.get('input[name=eventRemarks]').type('You would think this could bw in the field notes');
+    cy.get('input[name=institutionID]').type('Hogwarts');
+    cy.get('input[name=collectionID]').type('whaleSearch1');
+    cy.get('input[name=collectionCode]').type('ws1');
+    cy.get('input[name=datasetID]').type('summonedWhales');
+    cy.get('input[name=datasetName]').type('Summoned Whales');
+    cy.get('input[name=EditTissueSample]').first().click();
+    cy.url().should('match',/EncounterSetTissueSample/);
+    cy.contains('Action results');
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains(/Collection code:\s*ws1/).should('exist');
+    cy.contains(/Collection ID:\s*whaleSearch1/).should('exist');
+    cy.contains(/Dataset ID:\s*summonedWhales/).should('exist');
+    cy.contains(/Dataset name:\s*Summoned Whales/).should('exist');
+    cy.contains(/Event remarks:\s*You would think this could bw in the field notes/).should('exist');
+    cy.contains(/Field number:\s*uncountable/).should('exist');
+    cy.contains(/Institution ID:\s*Hogwarts/).should('exist');
+    cy.contains(/Sampling effort:\s*maximal/).should('exist');
+    cy.contains(/Sampling protocol:\s*dark summoning/).should('exist');
+    cy.contains(/Alternate Sample ID:\s*bioSample123AltId/).should('exist');
+    cy.contains(/Preservation method:\s*watercolor painting/).should('exist');
+    cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
   });
 
+  it('edits date', function(){
+    cy.get('button[id=editDate]').click();
+    cy.get('input[id=datepickerField]').type('2018-12-21 05:00');
+    cy.get('input[id=addResetDate]').click({force: true});
+    cy.get('button[id=closeEditDate]').click();
+    cy.contains('2018-12-21 05:00');
+    //TODO I don't understand why this test fails; it shouldn't
+  });
 
+  it.skip('adds image to encounter', function(){
+    cy.get('input[id=file-chooser]').click();
+    //TODO do things
+    cy.get('input[id=upload-button]').click();
+    cy.contains('Upload complete. Refresh page to see new image.');
+  });
 });
 
 describe('Wildbook instance encounter page no delete after each', function() {

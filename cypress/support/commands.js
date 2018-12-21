@@ -31,6 +31,13 @@ Cypress.Commands.add("deleteEncounterGeneric", ()=>{
   });
 });
 
+Cypress.Commands.add("deleteEncounterFlukebook", ()=>{
+  cy.get('button[id=editMeta]').click();
+  cy.get('input[id=deleteButton]').click();
+  Cypress.on('window:confirm', (err, runnable) => {
+  });
+});
+
 Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
   cy.visit('/encounters/searchResults.jsp?state=unapproved');
   cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000}).should('have.attr', 'title')
