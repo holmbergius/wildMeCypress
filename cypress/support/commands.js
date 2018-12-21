@@ -24,6 +24,13 @@ Cypress.Commands.add("findAndNavigateToFirstUnapprovedPortlandEncounter", ()=>{
   });
 });
 
+Cypress.Commands.add("deleteEncounterGeneric", ()=>{
+  cy.get('button[id=editMeta]').click();
+  cy.get('input[id=deleteButton]').click();
+  Cypress.on('window:confirm', (err, runnable) => {
+  });
+});
+
 Cypress.Commands.add("findAndNavigateToFirstUnapprovedEncounter", ()=>{
   cy.visit('/encounters/searchResults.jsp?state=unapproved');
   cy.get('#results-table > tbody > tr:nth-child(1)',{timeout:20000}).should('have.attr', 'title')
@@ -37,17 +44,13 @@ Cypress.Commands.add("logout", ()=>{
 });
 
 Cypress.Commands.add("login", ()=>{
-  cy.visit('/logout.jsp');
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
-  // cy.get('input[name=username]').type('atticus29'); //TODO put username in a better place
-  // cy.get('input[name=password]').type('FPython!11'); //TODO put password in a better place
   // "baseUrl": "https://www.flukebook.org", for cypress.json
   cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
   cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
   // "baseUrl": "http://localhost:8080/wildbook",
   cy.get('input[id=logMeIn]').click();
-  // cy.get('form[id=logMeInForm]').submit(); //TODO FIX
   cy.url().should('match',/welcome\.jsp/);
 });
 
@@ -75,6 +78,7 @@ Cypress.Commands.add("loginProgrammatically", () => {
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
+  cy.logout();
   cy.login();
   cy.visit('/submit.jsp');
   cy.get('input[id=datepicker]').type(new Date().toString());

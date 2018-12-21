@@ -1,14 +1,21 @@
 describe('Wildbook instance encounter page', function() {
   beforeEach(()=>{
     //TODO login is broken!
+    cy.logout();
     cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
+
+  afterEach(function () {
+    cy.deleteEncounterGeneric();
+  })
+
 it.skip('displays some known text in encounter.jsp', function(){
     cy.contains('Location');
     cy.contains('Date');
     cy.contains('Gallery');
   });
+
 it.skip('can edit location', function(){
     cy.get('button[id=editLocation]').click();
     cy.get('textarea[name=location]').type('Vancouver, WA');
@@ -97,79 +104,79 @@ it.skip('edits metadata comments', function(){
     cy.get('input[id=manualAdd]').click();
   });
 
-it.skip('creates and then deletes encounter', function(){
-    cy.get('button[id=editMeta]').click();
-    cy.get('input[id=deleteButton]').click();
-    Cypress.on('window:confirm', (err, runnable) => {
-    });
-    cy.url().should('match',/EncounterDelete/);
-    cy.contains('I have removed encounter');
-    cy.go('back');
-    cy.contains('There is no corresponding encounter number in the database');
-  });
-
 it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 
-it.skip('adds water temperature and salinity', function(){
-    cy.get('input[id=editMeasure]').click();
-    cy.contains('null').should('not.exist');
+it.skip('adds measurement', function(){
+    cy.get('button[id=editMeasure]').click();
     cy.get('input[id=measurementEvent0]').type('11');
-    cy.get('input[id=measurementEvent1]').type('35');
+    cy.get('#selectMeasurement').select('directly measured', {force: true});
     cy.get('input[id=addMeasurements]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
   });
+
 it.skip('adds left tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
-    cy.contains('null').should('not.exist');
-    cy.get('input[name=metalTag(left)]').type('leftTag');
+    cy.get('input[id=metalTagLocationleft]').type('leftTag');
     cy.get('input[id=setMetalTags]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains('Left: leftTag');
   });
+
 it.skip('adds right tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
-    cy.contains('null').should('not.exist');
-    cy.get('input[name=metalTag(right)]').type('rightTag');
+    cy.get('input[id=metalTagLocationright]').type('rightTag');
     cy.get('input[id=setMetalTags]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains('Right: rightTag');
   });
+
 it.skip('adds left and right tags for tracking', function(){
     cy.get('button[id=editTracking]').click();
-    cy.contains('null').should('not.exist');
-    cy.get('input[name=metalTag(left)]').type('leftTag');
-    cy.get('input[name=metalTag(right)]').type('rightTag');
+    cy.get('input[id=metalTagLocationright]').type('rightTag');
+    cy.get('input[id=metalTagLocationleft]').type('leftTag');
     cy.get('input[id=setMetalTags]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains('Right: rightTag');
+    cy.contains('Left: leftTag');
   });
+
 it.skip('adds acoustic tag', function(){
     cy.get('button[id=editTracking]').click();
-    cy.contains('null').should('not.exist');
     cy.get('input[id=acousticTagInput]').type('acousticTagSerial123');
     cy.get('input[id=acousticTagId]').type('acousticTagId123');
     cy.get('input[id=setAcousticTags]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains('Serial number: acousticTagSerial123');
   });
+
 it.skip('adds satellite tag', function(){
     cy.get('button[id=editTracking]').click();
-    cy.contains('null').should('not.exist');
     cy.get('select[name=satelliteTagName]').select('Wild Life Computers', {force: true});
     cy.get('input[id=satelliteTagSerial]').type('satelliteTagSerial123');
     cy.get('input[id=satelliteTagArgosPttNumber]').type('satelliteTagId123');
     cy.get('input[id=setSatelliteTags]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+    cy.contains(/Name\s*Wild Life Computers/);
+    cy.contains(/Serial number:\s*satelliteTagSerial123/);
+    cy.contains(/Argos PTT:\s*satelliteTagId123/);
   });
+
 it.skip('edits observation attributes', function(){
     cy.get('button[id=editObservation]').click();
-    cy.contains('null').should('not.exist');
-    cy.get('#genusSpecies').select('Physeter macrocephalus', {force: true});
-    cy.get('input[id=taxBtn]').click();
     cy.get('#livingStatus').select('dead', {force: true});
     cy.get('input[id=addStatus]').click();
     cy.get('#selectSex').select('male', {force: true});
@@ -178,38 +185,65 @@ it.skip('edits observation attributes', function(){
     cy.get('input[id=addScar]').click();
     cy.get('textarea[id=behaviorInput]').type('Really seemed to dislike things that look like cephalopods');
     cy.get('input[id=editBehavior]').click();
-    cy.get('textarea[id=groupRoleInput]').type('Not a team player');
-    cy.get('input[id=editGroupRole]').click();
-    cy.get('#colorCode').select('5U', {force: true});
-    cy.get('input[id=editPattern]').click();
-    cy.get('#lifeStage').select('adult', {force: true});
-    cy.get('input[id=addLife]').click();
     cy.get('textarea[id=commentInput]').type('Thanks for saving me, buddy!');
     cy.get('input[id=editComment]').click();
     cy.get('button[id=closeEditObservation]').click();
+    cy.contains(/Status:\s*dead/);
+    cy.contains(/Sex:\s*male/);
+    cy.contains(/Noticeable scarring:\s*noticeable scars from a terrifying fight with a giant squid. This whale saved my life!/);
+    cy.contains(/Behavior:\s*Really seemed to dislike things that look like cephalopods/);
+    cy.get('#displayComment').contains(/Thanks for saving me, buddy!/);
   });
+
 it.skip('dynamic properties don’t display null', function(){
     cy.get('input[id=editObservations]').click();
     cy.contains('null').should('not.exist');
   });
+
 it.skip('adds dynamic property', function(){
     cy.get('input[id=editObservations]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
     cy.get('input[id=addDynPropBtn]').click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
   });
+
 it.skip('edits existing dynamic property', function(){
     cy.get('input[id=editObservations]').click();
     cy.get('input[id=dynInput]').first().type('Giggles when you tickle it.');
     cy.get('input[id=dynEdit]').first().click();
     cy.contains('Action results');
-    cy.get('a').click(); //TODO how to access this view encounter link?
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
   });
 it.skip('adds biological sample', function(){
     cy.get('a[class=addBioSample]').click(); //TODO ?
   });
 
 
+});
+
+describe('Wildbook instance encounter page no delete after each', function() {
+  beforeEach(()=>{
+    //TODO login is broken!
+    cy.login();
+    cy.createAndNavigateToEncounterWildbookGeneric();
+  });
+
+  it.skip('creates and then deletes encounter', function(){
+      cy.deleteEncounterGeneric();
+      cy.url().should('match',/EncounterDelete/);
+      cy.contains('I have removed encounter');
+      cy.go('back');
+      cy.contains('There is no corresponding encounter number in the database');
+    });
+
+    it.skip('adds and removes adoption', function(){
+      cy.get('a').contains('Add adoption').click({timeout: 60000});
+      cy.get('p').contains('I could not find the adoption null').should('not.exist');
+      //TODO this test fails currently because there's a bug in wildbook
+      //TODO move out of Wildbook instance encounter page no delete after each after it starts passing
+    });
 });
