@@ -46,12 +46,12 @@ describe('Flukebook tests on individual.jsp for Pinchy specifically', function()
     cy.get('div[id=bioSamplesTable]').find('tbody > tr > td',{timeout: 60000}).contains('5560_SAMPLE').should('be.visible');
   });
 
-  it('can find a loaded map', function(){
+ it.skip('can find a loaded map', function(){
     cy.get('div[id=map_canvas]').should('be.visible');
     cy.get('div[id=map_canvas]').find('div').contains('Oops! Something went wrong.').should('not.exist'); //TODO I think. Hard to test this one. I tested on local instance with the map that doens't load in submit.jsp
   });
 
-  it('should not contain null text', function() {
+ it.skip('should not contain null text', function() {
     //TODO I think this test looks for not just null text, but null anything. Improve
     cy.contains('null').should('not.exist');
   });

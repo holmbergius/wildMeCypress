@@ -2,7 +2,7 @@ describe('All live instances should have these tests', function() {
   // beforeEach(()=>{
   // });
 
-  it('cannot use tomcat to log in', function(){
+ it.skip('cannot use tomcat to log in', function(){
     cy.visit('/logout.jsp');
     cy.visit('/login.jsp');
     cy.url().should('not.match',/welcome/);
@@ -12,7 +12,7 @@ describe('All live instances should have these tests', function() {
     cy.url().should('not.match',/welcome\.jsp/);
   });
 
-  it('cannot log in programmatically using default login', function(){
+ it.skip('cannot log in programmatically using default login', function(){
     //TODO test this
     cy.request({
     method: 'POST',

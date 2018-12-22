@@ -350,7 +350,7 @@ describe('Flukebook instance encounter page no delete after each', function() {
 //TODO maybe missing at the end }); ?
 
 describe('Flukebook instance encounter page no after each and no before each', function() {
-  it('adds image to encounter', function(){
+ it.skip('adds image to encounter', function(){
     cy.loginProgrammatically();
     cy.visit('/encounters/encounter.jsp?number=861d46de-52bb-4ab7-8f76-efda110854c9');
     cy.uploadFile('#file-chooser','fluke_manip.jpg');

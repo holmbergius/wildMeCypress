@@ -13,42 +13,42 @@ describe('Wildbook instance login page', function() {
     let password = 'tomcat123';
   });
 
-  // it('successfully logs in programmatically', function(){
+  //it.skip('successfully logs in programmatically', function(){
   //   cy.loginProgrammatically();
   //   cy.visit('/welcome.jsp');
   //   cy.url().should('match',/welcome\.jsp/);
   // });
 
-  it('greets with sign in', function() {
+ it.skip('greets with sign in', function() {
     cy.contains('Database login');
     cy.log("Testing testing");
   });
 
-  it('cannot visit welcome page before logging in', function(){
+ it.skip('cannot visit welcome page before logging in', function(){
     cy.visit('/welcome.jsp');
     cy.contains('Database login').should('exist');
   });
 
-  it('requires username', function(){
+ it.skip('requires username', function(){
     cy.get('input[name=username]').type('atticus29{enter}'); //TODO put username in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist'); //TODO this currently takes you to an encounter page and then displays Request collaboration with Shane Gero??
   });
 
-  it('requires password', function(){
+ it.skip('requires password', function(){
     cy.get('input[name=password]').type('FPython!11{enter}'); //TODO put password in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
 
-  it('requires valid username and password', function(){
+ it.skip('requires valid username and password', function(){
     cy.get('input[name=username]').type(username); //TODO put username in a better place
     cy.get('input[name=password]').type(password); //TODO put password in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
 
-  it('should not contain null text', function() {
+ it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 

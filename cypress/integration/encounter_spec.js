@@ -282,7 +282,7 @@ describe('Wildbook instance encounter page no delete after each', function() {
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
 
-  it('adds image to encounter', function(){
+ it.skip('adds image to encounter', function(){
     cy.uploadFile('#file-chooser','fluke_manip.jpg')
     // cy.get('input[id=file-chooser]').click();
     // //TODO do things

@@ -6,7 +6,7 @@ describe('Flukebook specific encounter submission page', function() {
   it.skip('displays report an encounter', function(){
     cy.contains('Report an Encounter');
   });
-  it('correctly fills out full encounter form without advanced information', function(){
+ it.skip('correctly fills out full encounter form without advanced information', function(){
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('portland, France');
     cy.get('#locationID').select('Study Site 1', {force: true});

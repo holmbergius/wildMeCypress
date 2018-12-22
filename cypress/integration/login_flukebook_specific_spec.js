@@ -11,24 +11,24 @@ describe('Flukebook instance login page', function() {
     });
   });
 
-  it('successfully logs in programmatically', function(){
+ it.skip('successfully logs in programmatically', function(){
     cy.loginProgrammatically();
     cy.visit('/welcome.jsp');
     cy.url().should('match',/welcome\.jsp/);
   });
 
-  it('greets with sign in', function() {
+ it.skip('greets with sign in', function() {
     cy.contains('Database login');
     cy.log("Testing testing");
   });
 
-  it('cannot visit welcome page before logging in', function(){
+ it.skip('cannot visit welcome page before logging in', function(){
     cy.visit('/welcome.jsp');
     cy.contains('Database login').should('exist');
   });
 
 
-  it('should not contain null text', function() {
+ it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 });
