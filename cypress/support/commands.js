@@ -50,15 +50,21 @@ Cypress.Commands.add("logout", ()=>{
   cy.visit('/logout.jsp');
 });
 
-Cypress.Commands.add("login", ()=>{
+Cypress.Commands.add("loginLocally", ()=>{
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
-  // "baseUrl": "https://www.flukebook.org", for cypress.json
   cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
   cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
-  // "baseUrl": "http://localhost:8080/wildbook",
   cy.get('input[id=logMeIn]').click();
   cy.url().should('match',/welcome\.jsp/);
+});
+
+Cypress.Commands.add("login", ()=>{
+  if(baseUrl==="https://www.flukebook.org"){
+    cy.loginProgrammatically();
+  } else{
+    cy.loginLocally();
+  }
 });
 
 Cypress.Commands.add("loginProgrammatically", () => {
