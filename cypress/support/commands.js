@@ -107,6 +107,37 @@ Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
   cy.url().should('match', /encounter.jsp/);
 });
 
+Cypress.Commands.add("createEncounterMarkIndividualNavigateThereGeneric", ()=>{
+  //these are brittle af
+  cy.logout();
+  cy.login();
+  cy.visit('/submit.jsp');
+  cy.get('input[id=datepicker]').type(new Date().toString());
+  cy.get('input[id=location]').type('a pineapple under the sea');
+  cy.get('#locationID').select('1', {force: true});
+  cy.get('input[id=lat]').type('45.590491');
+  cy.get('input[id=longitude]').type('-122.72125829999997');
+  cy.get('input[id=depth]').type('3');
+  cy.get('input[id=submitterName]').type('Mark Fisher');
+  cy.get('input[id=submitterEmail]').type('mark.fisher123@gmail.com');
+  cy.get('input[id=photographerName]').type('Someguy Imetonthestreet');
+  cy.get('input[id=photographerEmail]').type('Someguy.imetonthestreet@gmail.com');
+  cy.get('input[id=submitterOrganization]').type('Self');
+  cy.get('input[id=submitterProject]').type('PersonalLifeList');
+  cy.get('textarea[id=comments]').type('This is a lot of text fields');
+  cy.get('button[id=submitEncounterButton]').click();
+  cy.url().should('match',/confirmSubmit/);
+  cy.get('a').contains('View encounter').click();
+  cy.url().should('match', /encounter.jsp/);
+  cy.get('button[id=editIdentity]').click();
+  let randomNumString = Math.random().toString()
+  cy.get('input[id=individualAddEncounterInput]').type('testIndividual123');
+  cy.get('input[id=Add]').click();
+  cy.get('button[id=closeEditIdentity]').click();
+  cy.get('span[id=displayIndividualID]').click();
+});
+
+
 Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
   cy.loginProgrammatically();
   cy.visit('/submit.jsp');
@@ -136,6 +167,26 @@ Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
   // encounterId = encounterId.replace("View encounter ","");
   // cy.visit('https://www.flukebook.org/encounters/encounter.jsp?number=' + encounterNum);
   // cy.findAndNavigateToFirstUnapprovedPortlandEncounter();
+});
+
+Cypress.Commands.add('uploadFile', (selector, fileUrl, type = '') => {
+  return cy.get(selector).then(subject => {
+    cy //return
+      .fixture(fileUrl, 'base64')
+      .then(Cypress.Blob.base64StringToBlob)
+      .then(blob => {
+        // return cy.window().then(win => {
+          const el = subject[0];
+          const nameSegments = fileUrl.split('/');
+          const name = nameSegments[nameSegments.length - 1];
+          const testFile = new File([blob], name, { type: type });
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(testFile);
+          el.files = dataTransfer.files;
+          // return subject;
+        // });
+      });
+  });
 });
 
 Cypress.Commands.add("logout", ()=>{

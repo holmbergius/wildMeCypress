@@ -1,6 +1,5 @@
 describe('Flukebook tests on individual.jsp for Pinchy specifically', function() {
   beforeEach(()=>{
-    //TODO login is broken!
     cy.loginProgrammatically();
     cy.visit('/individuals.jsp?number=5560'); //TODO test OM02-017 again //5560
   });

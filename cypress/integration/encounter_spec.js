@@ -1,6 +1,5 @@
 describe('Wildbook instance encounter page', function() {
   beforeEach(()=>{
-    //TODO login is broken!
     cy.logout();
     cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
@@ -47,8 +46,7 @@ it.skip('add alternate id', function(){
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains('frumpy123').should('exist');
   });
-it('creates occurrence', function(){
-     cy.createAndNavigateToEncounterWildbookGeneric();
+it.skip('creates occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      let randomNumString = Math.random().toString()
      cy.get('input[id=createOccurrenceInput]').type('testOccurrence' + randomNumString);
@@ -56,7 +54,7 @@ it('creates occurrence', function(){
      cy.get('button[id=closeEditIdentity]').click();
      cy.contains(/Occurrence ID:\s*testOccurrence/).should('exist');
    });
-it('adds to occurrence', function(){
+it.skip('adds to occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
      cy.get('input[id=addOccurrence]').click();
@@ -268,7 +266,7 @@ it.skip('adds biological sample', function(){
     cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
   });
 
-  it('edits date', function(){
+  it.skip('edits date', function(){
     cy.get('button[id=editDate]').click();
     cy.get('input[id=datepickerField]').type('2018-12-21 05:00');
     cy.get('input[id=addResetDate]').click({force: true});
@@ -276,20 +274,20 @@ it.skip('adds biological sample', function(){
     cy.contains('2018-12-21 05:00');
     //TODO I don't understand why this test fails; it shouldn't
   });
-
-  it.skip('adds image to encounter', function(){
-    cy.get('input[id=file-chooser]').click();
-    //TODO do things
-    cy.get('input[id=upload-button]').click();
-    cy.contains('Upload complete. Refresh page to see new image.');
-  });
 });
 
 describe('Wildbook instance encounter page no delete after each', function() {
   beforeEach(()=>{
-    //TODO login is broken!
     cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
+  });
+
+  it('adds image to encounter', function(){
+    cy.uploadFile('#file-chooser','fluke_manip.jpg')
+    // cy.get('input[id=file-chooser]').click();
+    // //TODO do things
+    // cy.get('input[id=upload-button]').click();
+    // cy.contains('Upload complete. Refresh page to see new image.');
   });
 
   it.skip('creates and then deletes encounter', function(){

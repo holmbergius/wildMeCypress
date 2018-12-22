@@ -11,7 +11,7 @@ afterEach(function () {
   cy.deleteEncounterFlukebook();
 })
 
-it('tests whether createAndNavigateToEncounterFlukeBook works', function(){
+it.skip('tests whether createAndNavigateToEncounterFlukeBook works', function(){
   cy.createAndNavigateToEncounterFlukeBook();
 });
 
@@ -274,11 +274,6 @@ it.skip('adds biological sample with minimal input', function(){
 });
 
 it.skip('adds biological sample with maximal input', function(){
-  cy.on('uncaught:exception', (err, runnable) => {
-    // expect(err.message).to.include('of undefined')
-    // done()
-    return false;
-  });
   cy.get('a').contains('Add biological sample').click();
   cy.get('input[name=sampleID]').first().type("bioSample123");
   cy.get('input[name=alternateSampleID]').first().type("bioSample123AltId");
@@ -313,6 +308,15 @@ it.skip('adds biological sample with maximal input', function(){
   cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
 });
 
+it.skip('edits date', function(){
+  cy.get('button[id=editDate]').click();
+  cy.get('input[id=datepickerField]').type('2018-12-21 05:00');
+  cy.get('input[id=addResetDate]').click({force: true});
+  cy.get('button[id=closeEditDate]').click();
+  cy.contains('2018-12-21 05:00');
+  //TODO I don't understand why this test fails; it shouldn't
+});
+
 });
 
 describe('Flukebook instance encounter page no delete after each', function() {
@@ -322,17 +326,36 @@ describe('Flukebook instance encounter page no delete after each', function() {
   });
 
   it.skip('creates and then deletes encounter', function(){
-      cy.deleteEncounterFlukebook();
-      cy.url().should('match',/EncounterDelete/);
-      cy.contains('I have removed encounter');
-      cy.go('back');
-      cy.contains('There is no corresponding encounter number in the database');
-    });
+    cy.deleteEncounterFlukebook();
+    cy.url().should('match',/EncounterDelete/);
+    cy.contains('I have removed encounter');
+    cy.go('back');
+    cy.contains('There is no corresponding encounter number in the database');
+  });
 
-    it.skip('adds and removes adoption', function(){
-      cy.get('a').contains('Add adoption').click({timeout: 60000});
-      cy.get('p').contains('I could not find the adoption null').should('not.exist');
-      //TODO test whether this fails because of a bug like it does in generic wildbook
-      //TODO move out of Wildbook instance encounter page no delete after each after it starts passing
-    });
+  it.skip('adds and removes adoption', function(){
+    cy.get('a').contains('Add adoption').click({timeout: 60000});
+    cy.get('p').contains('I could not find the adoption null').should('not.exist');
+    //TODO test whether this fails because of a bug like it does in generic wildbook
+    //TODO move out of Wildbook instance encounter page no delete after each after it starts passing
+  });
+
+  it.skip('adds image to encounter', function(){
+    cy.get('input[id=file-chooser]').click();
+    //TODO do things
+    cy.get('input[id=upload-button]').click();
+    cy.contains('Upload complete. Refresh page to see new image.');
+  });
 });
+//TODO maybe missing at the end }); ?
+
+describe('Flukebook instance encounter page no after each and no before each', function() {
+  it('adds image to encounter', function(){
+    cy.loginProgrammatically();
+    cy.visit('/encounters/encounter.jsp?number=861d46de-52bb-4ab7-8f76-efda110854c9');
+    cy.uploadFile('#file-chooser','fluke_manip.jpg');
+  });
+});
+
+
+//TODO removing marked individual from encounter is a mess. Test for this.
