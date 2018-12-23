@@ -85,7 +85,7 @@ describe('Flukebook specific encounter submission page', function() {
 
 
   });
-  it.skip('correctly fills out minimal encounter form without advanced information', function(){ //TODO fix
+  it('correctly fills out minimal encounter form without advanced information', function(){ //TODO fix
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
@@ -101,7 +101,7 @@ describe('Flukebook specific encounter submission page', function() {
     cy.get('input[id=submitterProject]').type('PersonalLifeList');
     cy.get('textarea[id=comments]').type('This is a lot of text fields');
     cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
-    cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of the captcha stuff
+    cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of form submission stuff. Replace with programmatic submission here when you have that ironed out
     cy.url().should('match', /confirmSubmit/);
   });
   it.skip('cannot submit minimal encounter form with missing essential info.', function(){ //TODO fix
