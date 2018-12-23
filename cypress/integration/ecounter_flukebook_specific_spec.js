@@ -4,7 +4,6 @@ describe('Wildbook instance encounter page tests that only need me to log in onc
   cy.logout();
   cy.loginProgrammatically();
   cy.createAndNavigateToEncounterFlukeBook();
-  // cy.findAndNavigateToFirstUnapprovedPortlandEncounter(); //TODO can speed this up still
 });
 
 afterEach(function () {
@@ -76,8 +75,8 @@ it.skip('creates occurrence', function(){
 
 it.skip('adds to occurrence', function(){
   cy.get('button[id=editIdentity]').click();
-  cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
-  cy.get('input[id=addOccurrence]').click();
+  cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123', {force:true}); //TODO do I have to find a real occurrence that I can mess with?
+  cy.get('input[id=addOccurrence]').click({force:true});
   cy.get('button[id=closeEditIdentity]').click();
   //TODO add assert
 });

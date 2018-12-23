@@ -144,7 +144,7 @@ Cypress.Commands.add("createEncounterMarkIndividualNavigateThereGeneric", ()=>{
 });
 
 
-Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{
+Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{ //TODO create Programmatic version
   cy.loginProgrammatically();
   cy.visit('/submit.jsp');
   cy.get('input[id=datepicker]').type(new Date().toString());
