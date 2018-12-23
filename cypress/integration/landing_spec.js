@@ -1,4 +1,4 @@
-describe('Wildbook instance landing page known bugs', function() {
+describe('Wildbook instance landing page', function() {
   before(function() {
     cy.visit('/logout.jsp');
     cy.visit('/');

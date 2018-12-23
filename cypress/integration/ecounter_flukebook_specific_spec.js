@@ -95,7 +95,7 @@ it.skip('tests whether metadata should not have two assign to user', function(){
 it.skip('assign to user dropdown should not contain null', function(){
   cy.get('button[id=editMeta]').click();
   cy.get('#submitterSelect').contains('null').should('not.exist');
-  //TODO a known bug in wildbook
+  //ATTN a known bug in wildbook
 });
 
 it.skip('assigns approved state and then changes to unapproved state', function(){

@@ -48,7 +48,7 @@ describe('Flukebook tests on individual.jsp for Pinchy specifically', function()
 
  it.skip('can find a loaded map', function(){
     cy.get('div[id=map_canvas]').should('be.visible');
-    cy.get('div[id=map_canvas]').find('div').contains('Oops! Something went wrong.').should('not.exist'); //TODO I think. Hard to test this one. I tested on local instance with the map that doens't load in submit.jsp
+    cy.get('div[id=map_canvas]').find('div').contains('Oops! Something went wrong.').should('not.exist'); //ATTN I think. Hard to test this one. I tested on local instance with the map that doens't load in submit.jsp
   });
 
  it.skip('should not contain null text', function() {
