@@ -70,11 +70,11 @@ Cypress.Commands.add("login", ()=>{
 Cypress.Commands.add("loginProgrammatically", () => {
   cy.request({
     method: 'POST',
-    url: 'https://www.flukebook.org/LoginUser',
+    url: cy.config('baseUrl') + 'LoginUser',
     form: true,
     body: {
-      username:'atticus29',
-      password:'FPython!11'
+      username:'atticus29', //TODO figure out how to generalize
+      password:'FPython!11' //TODO figure out how to generalize
     }
   })
   .then((resp)=>{

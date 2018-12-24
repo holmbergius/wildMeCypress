@@ -1,5 +1,6 @@
 describe('All live instances should have these tests', function() {
   beforeEach(()=>{
+    cy.config('baseUrl','https://www.flukebook.org'); //TODO will want to change this to be more generic some day?
     cy.fixture('localVariables').as('localVars');
   });
 

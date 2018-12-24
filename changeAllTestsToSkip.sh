@@ -1,6 +1,6 @@
 for file in ./cypress/integration/*
 do
-  sed -i.bak 's/[^a-z]it(/it.skip(/g' "$file"
+  sed -i 's/[^a-z]it(/it.skip(/g' "$file"
 done
 
 

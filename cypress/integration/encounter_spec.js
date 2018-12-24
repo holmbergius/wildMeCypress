@@ -66,13 +66,13 @@ it('edits contact info', function(){
     //ATTN a known bug: this is auto-failing because currently edit contact button doesn't do anything
   });
 
- it.skip('assign to user dropdown should not contain null', function(){
+ it('assign to user dropdown should not contain null', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#submitterSelect').contains('null').should('not.exist');
     //ATTN a known bug in wildbook
   });
 
- it.skip('assigns approved state and then changes to unapproved state', function(){
+ it('assigns approved state and then changes to unapproved state', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#selectState').select('approved', {force: true});
     cy.get('input[id=editWork]').click();
@@ -82,7 +82,7 @@ it('edits contact info', function(){
     cy.get('span[id=displayWork]').contains('unapproved');
   });
 
- it.skip('assigns to user', function(){
+ it('assigns to user', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#submitterSelect').select('tomcat', {force: true});
     cy.get('input[id=Assign]').click();
@@ -90,7 +90,7 @@ it('edits contact info', function(){
     cy.contains('Action results');
   });
 
- it.skip('clicks tapir approve', function(){
+ it('clicks tapir approve', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('input[id=tapirApprove]').click();
     cy.contains('Action results');
@@ -265,7 +265,7 @@ it('adds biological sample', function(){
     cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
   });
 
- it.skip('edits date', function(){
+ it('edits date', function(){
     cy.get('button[id=editDate]').click();
     cy.get('input[id=datepickerField]').type('2018-12-21 05:00');
     cy.get('input[id=addResetDate]').click({force: true});
@@ -281,7 +281,7 @@ describe('Wildbook instance encounter page no delete after each', function() {
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
 
-it.skip('adds image to encounter', function(){
+it('adds image to encounter', function(){
     cy.uploadFile('#file-chooser','fluke_manip.jpg')
     // cy.get('input[id=file-chooser]').click();
     // //TODO do things
@@ -289,7 +289,7 @@ it.skip('adds image to encounter', function(){
     // cy.contains('Upload complete. Refresh page to see new image.');
   });
 
- it.skip('creates and then deletes encounter', function(){
+ it('creates and then deletes encounter', function(){
       cy.deleteEncounterGeneric();
       cy.url().should('match',/EncounterDelete/);
       cy.contains('I have removed encounter');
@@ -297,7 +297,7 @@ it.skip('adds image to encounter', function(){
       cy.contains('There is no corresponding encounter number in the database');
     });
 
-   it.skip('adds and removes adoption', function(){
+   it('adds and removes adoption', function(){
       cy.get('a').contains('Add adoption').click({timeout: 60000});
       cy.get('p').contains('I could not find the adoption null').should('not.exist');
       //ATTN this test fails currently because there's a bug in wildbook
