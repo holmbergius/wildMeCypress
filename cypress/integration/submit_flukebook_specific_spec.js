@@ -5,11 +5,11 @@ describe('Flukebook specific encounter submission page', function() {
     cy.visit('/submit.jsp');
   });
 
-it.skip('displays report an encounter', function(){
+it('displays report an encounter', function(){
     cy.contains('Report an Encounter');
   });
 
-it.skip('correctly fills out full encounter form without advanced information', function(){
+it('correctly fills out full encounter form without advanced information', function(){
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('portland, France');
     cy.get('#locationID').select('Study Site 1', {force: true});
@@ -85,7 +85,7 @@ it.skip('correctly fills out full encounter form without advanced information', 
     cy.url().should('match', '/confirmSubmit/');
   });
 
-it.skip('correctly fills out minimal encounter form without advanced information', function(){ //TODO fix
+it('correctly fills out minimal encounter form without advanced information', function(){ //TODO fix
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
@@ -104,7 +104,7 @@ it.skip('correctly fills out minimal encounter form without advanced information
     cy.get('form[id=encounterForm]').submit(); //TODO doubt very highly that this will work because of form submission stuff. Replace with programmatic submission here when you have that ironed out
     cy.url().should('match', /confirmSubmit/);
   });
-it.skip('cannot submit minimal encounter form with missing essential info.', function(){ //TODO fix
+it('cannot submit minimal encounter form with missing essential info.', function(){ //TODO fix
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
@@ -123,7 +123,7 @@ it.skip('cannot submit minimal encounter form with missing essential info.', fun
     cy.get('button[id=submitEncounterButton]').click();
     cy.url().should('not.match', /confirmSubmit/);
   });
-it.skip('correctly fills out encounter form with advanced information', function(){
+it('correctly fills out encounter form with advanced information', function(){
     cy.get('input[id=datepicker]').type('2018-12-19');
     cy.get('input[id=location]').type('a pineapple under the sea');
     cy.get('#locationID').select('Study Site 1', {force: true});
@@ -141,7 +141,7 @@ it.skip('correctly fills out encounter form with advanced information', function
     cy.get('#genusSpecies').select('Megaptera novaeangliae', {force: true});
     //TODO find a way to click the advanced info button (push a change with an id to the wildbook repo?)
   });
-it.skip('should not contain null text', function() {
+it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 

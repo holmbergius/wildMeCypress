@@ -9,17 +9,17 @@ describe('Wildbook instance encounter page', function() {
     cy.deleteEncounterGeneric();
   });
 
-it.skip('creates and navigates to encounter successfully', function(){
+it('creates and navigates to encounter successfully', function(){
     cy.url().should('match', /encounter.jsp/);
   });
 
-it.skip('displays some known text in encounter.jsp', function(){
+it('displays some known text in encounter.jsp', function(){
     cy.contains('Location');
     cy.contains('Date');
     cy.contains('Gallery');
   });
 
-it.skip('can edit location', function(){
+it('can edit location', function(){
     cy.get('button[id=editLocation]').click();
     cy.get('textarea[name=location]').type('Vancouver, WA');
     cy.get('input[id=addLocation]').click();
@@ -34,7 +34,7 @@ it.skip('can edit location', function(){
     cy.get('input[id=setGPSbutton]').click({force: true});
     cy.get('button[id=closeEditLocation]').click();
   });
-it.skip('can set new or existing individual ID', function(){
+it('can set new or existing individual ID', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true});
     cy.get('#matchType').select('Pattern match', {force: true});
@@ -42,14 +42,14 @@ it.skip('can set new or existing individual ID', function(){
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains('frumpy');
   });
-it.skip('add alternate id', function(){
+it('add alternate id', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains('frumpy123').should('exist');
   });
-it.skip('creates occurrence', function(){
+it('creates occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      let randomNumString = Math.random().toString()
      cy.get('input[id=createOccurrenceInput]').type('testOccurrence' + randomNumString);
@@ -57,26 +57,26 @@ it.skip('creates occurrence', function(){
      cy.get('button[id=closeEditIdentity]').click();
      cy.contains(/Occurrence ID:\s*testOccurrence/).should('exist');
    });
-it.skip('adds to occurrence', function(){
+it('adds to occurrence', function(){
      cy.get('button[id=editIdentity]').click();
      cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
      cy.get('input[id=addOccurrence]').click();
      cy.get('button[id=closeEditIdentity]').click();
      //TODO add assert
    });
-it.skip('edits contact info', function(){
+it('edits contact info', function(){
     cy.get('button[id=editContactBtn]').click();
     cy.contains('Submitter').should('not.exist');
     //ATTN a known bug: this is auto-failing because currently edit contact button doesn't do anything
   });
 
-it.skip('assign to user dropdown should not contain null', function(){
+it('assign to user dropdown should not contain null', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#submitterSelect').contains('null').should('not.exist');
     //ATTN a known bug in wildbook
   });
 
-it.skip('assigns approved state and then changes to unapproved state', function(){
+it('assigns approved state and then changes to unapproved state', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#selectState').select('approved', {force: true});
     cy.get('input[id=editWork]').click();
@@ -86,7 +86,7 @@ it.skip('assigns approved state and then changes to unapproved state', function(
     cy.get('span[id=displayWork]').contains('unapproved');
   });
 
-it.skip('assigns to user', function(){
+it('assigns to user', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#submitterSelect').select('tomcat', {force: true});
     cy.get('input[id=Assign]').click();
@@ -94,7 +94,7 @@ it.skip('assigns to user', function(){
     cy.contains('Action results');
   });
 
-it.skip('clicks tapir approve', function(){
+it('clicks tapir approve', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('input[id=tapirApprove]').click();
     cy.contains('Action results');
@@ -102,17 +102,17 @@ it.skip('clicks tapir approve', function(){
     //TODO currently fails when it shouldn't see JIRA issue WHALESHARK-29 ("Uncaught SyntaxError: Unexpected token < in encounter.jsp")
   });
 
-it.skip('edits metadata comments', function(){
+it('edits metadata comments', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('textarea[id=autoComments]').type('this is a cypress test comment');
     cy.get('input[id=manualAdd]').click();
   });
 
-it.skip('should not contain null text', function() {
+it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 
-it.skip('adds measurement', function(){
+it('adds measurement', function(){
     cy.get('button[id=editMeasure]').click();
     cy.get('input[id=measurementEvent0]').type('11');
     cy.get('#selectMeasurement').select('directly measured', {force: true});
@@ -122,7 +122,7 @@ it.skip('adds measurement', function(){
     cy.url().should('match', /encounter.jsp/);
   });
 
-it.skip('adds left tag for tracking', function(){
+it('adds left tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
     cy.get('input[id=metalTagLocationleft]').type('leftTag');
     cy.get('input[id=setMetalTags]').click();
@@ -132,7 +132,7 @@ it.skip('adds left tag for tracking', function(){
     cy.contains('Left: leftTag');
   });
 
-it.skip('adds right tag for tracking', function(){
+it('adds right tag for tracking', function(){
     cy.get('button[id=editTracking]').click();
     cy.get('input[id=metalTagLocationright]').type('rightTag');
     cy.get('input[id=setMetalTags]').click();
@@ -142,7 +142,7 @@ it.skip('adds right tag for tracking', function(){
     cy.contains('Right: rightTag');
   });
 
-it.skip('adds left and right tags for tracking', function(){
+it('adds left and right tags for tracking', function(){
     cy.get('button[id=editTracking]').click();
     cy.get('input[id=metalTagLocationright]').type('rightTag');
     cy.get('input[id=metalTagLocationleft]').type('leftTag');
@@ -154,7 +154,7 @@ it.skip('adds left and right tags for tracking', function(){
     cy.contains('Left: leftTag');
   });
 
-it.skip('adds acoustic tag', function(){
+it('adds acoustic tag', function(){
     cy.get('button[id=editTracking]').click();
     cy.get('input[id=acousticTagInput]').type('acousticTagSerial123');
     cy.get('input[id=acousticTagId]').type('acousticTagId123');
@@ -165,7 +165,7 @@ it.skip('adds acoustic tag', function(){
     cy.contains('Serial number: acousticTagSerial123');
   });
 
-it.skip('adds satellite tag', function(){
+it('adds satellite tag', function(){
     cy.get('button[id=editTracking]').click();
     cy.get('select[name=satelliteTagName]').select('Wild Life Computers', {force: true});
     cy.get('input[id=satelliteTagSerial]').type('satelliteTagSerial123');
@@ -179,7 +179,7 @@ it.skip('adds satellite tag', function(){
     cy.contains(/Argos PTT:\s*satelliteTagId123/);
   });
 
-it.skip('edits observation attributes', function(){
+it('edits observation attributes', function(){
     cy.get('button[id=editObservation]').click();
     cy.get('#livingStatus').select('dead', {force: true});
     cy.get('input[id=addStatus]').click();
@@ -199,13 +199,13 @@ it.skip('edits observation attributes', function(){
     cy.get('#displayComment').contains(/Thanks for saving me, buddy!/);
   });
 
-it.skip('dynamic properties don’t display null', function(){
+it('dynamic properties don’t display null', function(){
     //I think in retrospect a stupid test?
     cy.get('button[id=editDynamic]').click();
     cy.contains('null').should('not.exist');
   });
 
-it.skip('adds dynamic property', function(){
+it('adds dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -216,7 +216,7 @@ it.skip('adds dynamic property', function(){
     cy.contains(/Mystery_Property_1:\s*Glows under fluorescent light/);
   });
 
-it.skip('adds dynamic property and edits existing dynamic property', function(){
+it('adds dynamic property and edits existing dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -234,7 +234,7 @@ it.skip('adds dynamic property and edits existing dynamic property', function(){
     cy.contains('Giggles when you tickle it').should('exist');
   });
 
-it.skip('adds biological sample', function(){
+it('adds biological sample', function(){
     cy.get('a').contains('Add biological sample').click();
     cy.get('input[name=sampleID]').first().type("bioSample123");
     cy.get('input[name=alternateSampleID]').first().type("bioSample123AltId");
@@ -269,7 +269,7 @@ it.skip('adds biological sample', function(){
     cy.contains(/Storage lab ID:\s*bioSample123Lab456/).should('exist');
   });
 
-it.skip('edits date', function(){
+it('edits date', function(){
     cy.get('button[id=editDate]').click();
     cy.get('input[id=datepickerField]').type('2018-12-21 05:00');
     cy.get('input[id=addResetDate]').click({force: true});
@@ -285,7 +285,7 @@ describe('Wildbook instance encounter page no delete after each', function() {
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
 
-it.skip('adds image to encounter', function(){
+it('adds image to encounter', function(){
     cy.uploadFile('#file-chooser','fluke_manip.jpg')
     // cy.get('input[id=file-chooser]').click();
     // //TODO do things
@@ -293,7 +293,7 @@ it.skip('adds image to encounter', function(){
     // cy.contains('Upload complete. Refresh page to see new image.');
   });
 
-it.skip('creates and then deletes encounter', function(){
+it('creates and then deletes encounter', function(){
       cy.deleteEncounterGeneric();
       cy.url().should('match',/EncounterDelete/);
       cy.contains('I have removed encounter');
@@ -301,7 +301,7 @@ it.skip('creates and then deletes encounter', function(){
       cy.contains('There is no corresponding encounter number in the database');
     });
 
- it.skip('adds and removes adoption', function(){
+it('adds and removes adoption', function(){
       cy.get('a').contains('Add adoption').click({timeout: 60000});
       cy.get('p').contains('I could not find the adoption null').should('not.exist');
       //ATTN this test fails currently because there's a bug in wildbook

@@ -9,11 +9,11 @@ describe('Wildbook instance landing page', function() {
     });
   });
 
-it.skip('should not contain How It Works text', function() {
+it('should not contain How It Works text', function() {
     cy.contains('How it Works').should('exist');
   });
 
-it.skip('should not contain null text', function() {
+it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 });

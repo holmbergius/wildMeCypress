@@ -5,37 +5,37 @@ describe('Wildbook instance login page', function() {
     cy.visit('/login.jsp');
   });
 
-  /it.skip('successfully logs in programmatically', function(){ //TODO once you add parameters to loginProgrammatically
+  //sit('successfully logs in programmatically', function(){ //TODO once you add parameters to loginProgrammatically
   //   cy.loginProgrammatically();
   //   cy.visit('/welcome.jsp');
   //   cy.url().should('match',/welcome\.jsp/);
   // });
 
-it.skip('greets with sign in', function() {
+it('greets with sign in', function() {
     cy.contains('Database login');
     cy.log("Testing testing");
   });
 
-it.skip('cannot visit welcome page before logging in', function(){
+it('cannot visit welcome page before logging in', function(){
     cy.visit('/welcome.jsp');
     cy.contains('Database login').should('exist');
   });
 
-it.skip('requires username', function(){
+it('requires username', function(){
     let username = this.localVars.username;
     cy.get('input[name=username]').type(username + '{enter}'); //TODO put username in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist'); //TODO this currently takes you to an encounter page and then displays Request collaboration with Shane Gero??
   });
 
-it.skip('requires password', function(){
+it('requires password', function(){
     let password = this.localVars.password;
     cy.get('input[name=password]').type(password + '{enter}'); //TODO put password in a better place
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
 
-it.skip('requires valid username and password', function(){
+it('requires valid username and password', function(){
     let username = this.localVars.username;
     let password = this.localVars.password;
     cy.get('input[name=username]').type(username);
@@ -44,7 +44,7 @@ it.skip('requires valid username and password', function(){
     cy.contains('Database login').should('exist');
   });
 
-it.skip('should not contain null text', function() {
+it('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 

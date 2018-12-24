@@ -4,7 +4,7 @@ describe('All live instances should have these tests', function() {
     cy.fixture('localVariables').as('localVars');
   });
 
-it.skip('cannot use tomcat to log in programmatically', function(){
+it('cannot use tomcat to log in programmatically', function(){
     cy.visit('/logout.jsp');
     cy.visit('/login.jsp');
     cy.url().should('not.match',/welcome/);
