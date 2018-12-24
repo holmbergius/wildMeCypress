@@ -60,7 +60,7 @@ Cypress.Commands.add("loginLocally", ()=>{
 });
 
 Cypress.Commands.add("login", ()=>{
-  if(Cypress.config().baseUrl==="https://www.flukebook.org"){
+  if(Cypress.config().baseUrl==="https://www.flukebook.org/"){
     cy.loginProgrammatically();
   } else{
     cy.loginLocally();
