@@ -1,7 +1,7 @@
 //TODO test all of these again
 describe('Wildbook instance encounter page tests that only need me to log in once', function() {
   beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
-  cy.config('baseUrl','https://www.flukebook.org');
+  Cypress.config('baseUrl','https://www.flukebook.org');
   cy.logout();
   cy.loginProgrammatically();
   cy.createAndNavigateToEncounterFlukeBook();

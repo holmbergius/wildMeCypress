@@ -1,6 +1,6 @@
 describe('Flukebook specific encounter submission page', function() {
   beforeEach(()=>{
-    cy.config('baseUrl','https://www.flukebook.org');
+    Cypress.config('baseUrl','https://www.flukebook.org');
     cy.loginProgrammatically();
     cy.visit('/submit.jsp');
   });

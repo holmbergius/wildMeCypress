@@ -1,11 +1,11 @@
 describe('Tests for when IBEIS rebuilds', function() {
-  cy.config('baseUrl','http://104.42.42.134:5005/');
+  Cypress.config('baseUrl','http://104.42.42.134:5005/');
  it.skip('should get valid JSON results from ___', function(){
     cy.requst({
       Name: 'IBEIS',
       Secret: 'CB73808F-A6F6-094B-5FCD-385EBAFF8FC0',
       Method: 'GET',
-      url: cy.config(baseUrl)+'/api/core/',
+      url: Cypress.config(baseUrl)+'/api/core/',
       headers: {
       },
       form: false,

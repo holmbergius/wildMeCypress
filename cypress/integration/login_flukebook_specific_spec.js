@@ -1,6 +1,6 @@
 describe('Flukebook instance login page', function() {
   beforeEach(()=>{
-    cy.config('baseUrl','https://www.flukebook.org');
+    Cypress.config('baseUrl','https://www.flukebook.org');
     cy.visit('/logout.jsp');
     cy.visit('/login.jsp');
   });

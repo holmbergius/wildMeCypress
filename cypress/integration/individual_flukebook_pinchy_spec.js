@@ -1,6 +1,6 @@
 describe('Flukebook tests on individual.jsp for Pinchy specifically', function() {
   beforeEach(()=>{
-    cy.config('baseUrl','https://www.flukebook.org');
+    Cypress.config('baseUrl','https://www.flukebook.org');
     cy.loginProgrammatically();
     cy.visit('/individuals.jsp?number=5560'); //TODO test OM02-017 again //5560
   });

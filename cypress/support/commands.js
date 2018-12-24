@@ -70,7 +70,7 @@ Cypress.Commands.add("login", ()=>{
 Cypress.Commands.add("loginProgrammatically", () => {
   cy.request({
     method: 'POST',
-    url: cy.config('baseUrl') + 'LoginUser',
+    url: Cypress.config('baseUrl') + 'LoginUser',
     form: true,
     body: {
       username:'atticus29', //TODO figure out how to generalize
