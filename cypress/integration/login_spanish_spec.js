@@ -2,23 +2,19 @@ describe('Wildbook instance landing page', function() {
   // beforeEach(()=>{
   // });
   before(function() {
-    cy.on('uncaught:exception', (err, runnable) => {
-    expect(err.message).to.include('of undefined')
-      done()
-      return false
-    });
+    Cypress.config('baseUrl', 'http://localhost:8080/wildbook/');
     cy.visit('/login.jsp?langCode=es');
   });
 
-it('visits landing page in spanish and finds something in spanish', function() {
+it.skip('visits landing page in spanish and finds something in spanish', function() {
     cy.contains('Participar');
   });
 
-it('logs in on spanish page', function(){
+it.skip('logs in on spanish page', function(){
     cy.login();
   });
 
-it('should not contain null text', function() {
+it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 });

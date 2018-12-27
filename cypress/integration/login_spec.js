@@ -1,5 +1,6 @@
 describe('Wildbook instance login page', function() {
   beforeEach(()=>{
+    Cypress.config('baseUrl', 'http://localhost:8080/wildbook/');
     cy.fixture('localVariables').as('localVars');
     cy.logout();
     cy.visit('/login.jsp');
@@ -11,31 +12,31 @@ describe('Wildbook instance login page', function() {
   //   cy.url().should('match',/welcome\.jsp/);
   // });
 
-it('greets with sign in', function() {
+it.skip('greets with sign in', function() {
     cy.contains('Database login');
     cy.log("Testing testing");
   });
 
-it('cannot visit welcome page before logging in', function(){
+it.skip('cannot visit welcome page before logging in', function(){
     cy.visit('/welcome.jsp');
     cy.contains('Database login').should('exist');
   });
 
-it('requires username', function(){
+it.skip('requires username', function(){
     let username = this.localVars.username;
-    cy.get('input[name=username]').type(username + '{enter}'); //TODO put username in a better place
-    cy.url().should('match',/login/);
-    cy.contains('Database login').should('exist'); //TODO this currently takes you to an encounter page and then displays Request collaboration with Shane Gero??
-  });
-
-it('requires password', function(){
-    let password = this.localVars.password;
-    cy.get('input[name=password]').type(password + '{enter}'); //TODO put password in a better place
+    cy.get('input[name=username]').type(username + '{enter}');
     cy.url().should('match',/login/);
     cy.contains('Database login').should('exist');
   });
 
-it('requires valid username and password', function(){
+it.skip('requires password', function(){
+    let password = this.localVars.password;
+    cy.get('input[name=password]').type(password + '{enter}');
+    cy.url().should('match',/login/);
+    cy.contains('Database login').should('exist');
+  });
+
+it.skip('requires valid username and password', function(){
     let username = this.localVars.username;
     let password = this.localVars.password;
     cy.get('input[name=username]').type(username);
@@ -44,7 +45,7 @@ it('requires valid username and password', function(){
     cy.contains('Database login').should('exist');
   });
 
-it('should not contain null text', function() {
+it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
 
