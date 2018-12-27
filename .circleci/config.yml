@@ -15,4 +15,5 @@ workflows:
              docker container run -d -p 80:80 --name wildbook_nginx --network=main --network-alias nginx --link wildbook_tomcat wildme/nginx:latest
              sudo chmod -R 700 wildbook_db_postgresql/
     # jobs:
+    test:
       - cypress/run # "run" job comes from "cypress" orb hi pretending to change a thing again
