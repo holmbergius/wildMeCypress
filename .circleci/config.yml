@@ -13,6 +13,9 @@ jobs:
          docker container run -d --name wildbook_tomcat --network=main --network-alias wildbook --link wildbook_db_postgresql -v "$(pwd)"/wildbook_tomcat_data_dir:/data/wildbook_data_dir/ wildme/wildbook:latest
          docker container run -d -p 80:80 --name wildbook_nginx --network=main --network-alias nginx --link wildbook_tomcat wildme/nginx:latest
          sudo chmod -R 700 wildbook_db_postgresql/
+         docker exec wildbook_db_postgresql curl --retry 10 --retry-connrefused http://localhost:8080
+         docker exec wildbook_tomcat curl --retry 10 --retry-connrefused http://localhost:8080
+         docker exec wildbook_nginx curl --retry 10 --retry-connrefused http://localhost:8080
 workflows:
   build:
     jobs:
