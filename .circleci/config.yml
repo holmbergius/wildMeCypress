@@ -6,6 +6,7 @@ jobs:
    machine: true
    steps:
      - checkout
+     - setup_remote_docker
      - run: |
          sudo service docker start
          docker network create main
