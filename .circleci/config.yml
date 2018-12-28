@@ -6,7 +6,6 @@ jobs:
    machine: true
    steps:
      - checkout
-     - setup_remote_docker
      - run: |
          sudo service docker start
          docker network create main
@@ -17,6 +16,7 @@ jobs:
          docker exec wildbook_db_postgresql curl --retry 10 --retry-connrefused http://localhost:8080
          docker exec wildbook_tomcat curl --retry 10 --retry-connrefused http://localhost:8080
          docker exec wildbook_nginx curl --retry 10 --retry-connrefused http://localhost:8080
+     - setup_remote_docker
 workflows:
   build:
     jobs:
