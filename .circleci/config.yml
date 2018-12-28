@@ -7,6 +7,7 @@ jobs:
    steps:
      - checkout
      - run: |
+         sudo service docker start
          docker network create main
          docker container run -d --name wildbook_db_postgresql --network=main --network-alias postgresql -e POSTGRES_DB=wildbook -e POSTGRES_USER=wildbook -e POSTGRES_PASSWORD=wildbook -v "$(pwd)"/wildbook_db_postgresql:/var/lib/postgresql/data:z postgres:9.6
          docker container run -d --name wildbook_tomcat --network=main --network-alias wildbook --link wildbook_db_postgresql -v "$(pwd)"/wildbook_tomcat_data_dir:/data/wildbook_data_dir/ wildme/wildbook:latest
