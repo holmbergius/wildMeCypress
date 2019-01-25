@@ -1,12 +1,34 @@
 describe('Wildbook instance encounter page create and destroy each time for tests that need to be isolated and tests that are in the hospital', function() {
   beforeEach(()=>{
-    Cypress.config('baseUrl', 'http://localhost:8080/wildbook/');
+    Cypress.config('baseUrl', 'http://104.42.42.134/');
+    cy.fixture('localVariables').as('localVars');
+    cy.fixture('liveVariables').as('liveVars');
     cy.logout();
-    cy.login();
+    cy.login(this.localVars.username, this.localVars.password);
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
   afterEach(function () {
     cy.deleteEncounterGeneric();
+  });
+
+  it.skip('assigns to user', function(){
+    //ATTN works in isolation but not with other tests. Looks like it logs you out for some reason when paired with other tests
+    cy.get('button[id=editMeta]').click();
+    cy.get('#submitterSelect').select('tomcat', {force: true});
+    cy.get('input[id=Assign]').click();
+    cy.url().should('match', /EncounterSetSubmitterID/);
+    cy.contains('Action results');
+    cy.get('a').contains('Return to encounter').click();
+    cy.url().should('match', /encounter.jsp/);
+  });
+
+  it.skip('edits date', function(){
+    cy.get('button[id=editDate]').click();
+    cy.get('input[id=datepickerField]').type('2018-12-21{enter}');
+    // cy.get('input[id=addResetDate]').click({force: true});
+    cy.get('button[id=closeEditDate]').click();
+    cy.contains('2018-12-21');
+    //TODO Fails because 'I have NOT changed the encounter date because another user is currently modifying this encounter. Please try this operation again in a few seconds'
   });
 
   // sit('creates and navigates to encounter successfully', function(){
@@ -130,13 +152,14 @@ describe('Wildbook instance encounter page create and destroy each time for test
 
 describe('Wildbook instance encounter page one created and one deleted encounter', function() {
   before(()=>{
-    cy.login();
+    // cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
   after(()=>{
     cy.deleteEncounterGeneric();
   });
-it.skip('displays some known text in encounter.jsp', function(){
+
+  it.skip('displays some known text in encounter.jsp', function(){
     cy.contains('Location');
     cy.contains('Date');
     cy.contains('Gallery');
@@ -145,7 +168,8 @@ it.skip('displays some known text in encounter.jsp', function(){
   it.skip('should not contain null text', function() {
     cy.contains('null').should('not.exist');
   });
-it.skip('can edit location', function(){
+
+  it.skip('can edit location', function(){
     cy.get('button[id=editLocation]').click();
     cy.get('textarea[name=location]').type('Vancouver, WA');
     cy.get('input[id=addLocation]').click();
@@ -160,7 +184,7 @@ it.skip('can edit location', function(){
     cy.get('input[id=setGPSbutton]').click({force: true});
     cy.get('button[id=closeEditLocation]').click();
   });
-it.skip('can set new or existing individual ID', function(){
+  it.skip('can set new or existing individual ID', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true});
     cy.get('#matchType').select('Pattern match', {force: true});
@@ -168,14 +192,14 @@ it.skip('can set new or existing individual ID', function(){
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains('frumpy');
   });
-it.skip('add alternate id', function(){
+  it.skip('add alternate id', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=alternateid]').type('frumpy123');
     cy.get('input[id=setAltIDbtn]').click();
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains('frumpy123').should('exist');
   });
-it.skip('creates occurrence', function(){
+  it.skip('creates occurrence', function(){
     cy.get('button[id=editIdentity]').click();
     let randomNumString = Math.random().toString()
     cy.get('input[id=createOccurrenceInput]').type('testOccurrence' + randomNumString);
@@ -183,14 +207,14 @@ it.skip('creates occurrence', function(){
     cy.get('button[id=closeEditIdentity]').click();
     cy.contains(/Occurrence ID:\s*testOccurrence/).should('exist');
   });
-it.skip('adds to occurrence', function(){
+  it.skip('adds to occurrence', function(){
     cy.get('button[id=editIdentity]').click();
     cy.get('input[id=add2OccurrenceInput]').type('knownOccurrence123'); //TODO do I have to find a real occurrence that I can mess with?
     cy.get('input[id=addOccurrence]').click();
     cy.get('button[id=closeEditIdentity]').click();
     //TODO add assert
   });
-it.skip('assigns approved state and then changes to unapproved state', function(){
+  it.skip('assigns approved state and then changes to unapproved state', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('#selectState').select('approved', {force: true});
     cy.get('input[id=editWork]').click();
@@ -200,7 +224,6 @@ it.skip('assigns approved state and then changes to unapproved state', function(
     cy.get('span[id=displayWork]').contains('unapproved');
     cy.get('button[id=closeEditMeta]').click();
   });
-
   it.skip('adds measurement', function(){
     cy.get('button[id=editMeasure]').click();
     cy.get('input[id=measurementEvent0]').type('11');
@@ -210,13 +233,14 @@ it.skip('assigns approved state and then changes to unapproved state', function(
     cy.get('a').contains('Return to encounter').click();
     cy.url().should('match', /encounter.jsp/);
   });
-it.skip('edits metadata comments', function(){
+
+  it.skip('edits metadata comments', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('textarea[id=autoComments]').type('this is a cypress test comment');
     cy.get('input[id=manualAdd]').click();
     cy.get('button[id=closeEditMeta]').click();
   });
-it.skip('edits observation attributes', function(){
+  it.skip('edits observation attributes', function(){
     cy.get('button[id=editObservation]').click();
     cy.get('#livingStatus').select('dead', {force: true});
     cy.get('input[id=addStatus]').click();
@@ -235,29 +259,15 @@ it.skip('edits observation attributes', function(){
     cy.contains(/Behavior:\s*Really seemed to dislike things that look like cephalopods/);
     cy.get('#displayComment').contains(/Thanks for saving me, buddy!/);
   });
-it.skip('dynamic properties don’t display null', function(){
+  it.skip('dynamic properties don’t display null', function(){
     //I think in retrospect a stupid test?
+    //ATTN this failure is currently expected. Whether it's expected once the buggy nulls are removed is unclear.
     cy.get('button[id=editDynamic]').click();
     cy.contains('null').should('not.exist');
   });
-it('edits date', function(){
-    cy.get('button[id=editDate]').click();
-    cy.get('input[id=datepickerField]').type('2018-12-21{enter}');
-    // cy.get('input[id=addResetDate]').click({force: true});
-    cy.get('button[id=closeEditDate]').click();
-    cy.contains('2018-12-21');
-    //TODO Fails because 'I have NOT changed the encounter date because another user is currently modifying this encounter. Please try this operation again in a few seconds'
-  });
-it.skip('assigns to user', function(){
-    cy.get('button[id=editMeta]').click();
-    cy.get('#submitterSelect').select('tomcat', {force: true});
-    cy.get('input[id=Assign]').click();
-    cy.url().should('match', /EncounterSetSubmitterID/);
-    cy.contains('Action results');
-    cy.get('a').contains('Return to encounter').click();
-    cy.url().should('match', /encounter.jsp/);
-  });
-it.skip('clicks tapir approve', function(){
+
+
+  it('clicks tapir approve', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('input[id=tapirApprove]').click();
     cy.contains('Action results');
@@ -266,7 +276,7 @@ it.skip('clicks tapir approve', function(){
     cy.url().should('match', /encounter.jsp/);
     //TODO currently fails when it shouldn't see JIRA issue WHALESHARK-29 ("Uncaught SyntaxError: Unexpected token < in encounter.jsp")
   });
-it.skip('adds dynamic property', function(){
+  it('adds dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -276,7 +286,7 @@ it.skip('adds dynamic property', function(){
     cy.url().should('match', /encounter.jsp/);
     cy.contains(/Mystery_Property_1:\s*Glows under fluorescent light/);
   });
-it.skip('adds dynamic property and edits existing dynamic property', function(){
+  it('adds dynamic property and edits existing dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -301,21 +311,21 @@ describe('Wildbook instance encounter page no delete after each', function() {
     cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
-it.skip('adds image to encounter', function(){
+  it('adds image to encounter', function(){
     cy.uploadFile('#file-chooser','fluke_manip.jpg')
     // cy.get('input[id=file-chooser]').click();
     // //TODO do things
     // cy.get('input[id=upload-button]').click();
     // cy.contains('Upload complete. Refresh page to see new image.');
   });
-it.skip('creates and then deletes encounter', function(){
+  it.skip('creates and then deletes encounter', function(){
     cy.deleteEncounterGeneric();
     cy.url().should('match',/EncounterDelete/);
     cy.contains('I have removed encounter');
     cy.go('back');
     cy.contains('There is no corresponding encounter number in the database');
   });
-it.skip('adds and removes adoption', function(){
+  it.skip('adds and removes adoption', function(){
     cy.get('a').contains('Add adoption').click({timeout: 60000});
     cy.get('p').contains('I could not find the adoption null').should('not.exist');
     //ATTN this test fails currently because there's a bug in wildbook

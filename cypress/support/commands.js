@@ -50,7 +50,7 @@ Cypress.Commands.add("logout", ()=>{
   cy.visit('/logout.jsp');
 });
 
-Cypress.Commands.add("loginLocally", ()=>{
+Cypress.Commands.add("loginLocallyManually", ()=>{
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
   cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
@@ -59,22 +59,39 @@ Cypress.Commands.add("loginLocally", ()=>{
   cy.url().should('match',/welcome\.jsp/);
 });
 
-Cypress.Commands.add("login", ()=>{
+Cypress.Commands.add("login", (username, password)=>{
   if(Cypress.config().baseUrl==="https://www.flukebook.org/"){
-    cy.loginProgrammatically();
+    cy.loginProgrammatically(username, password);
   } else{
-    cy.loginLocally();
+    cy.loginProgrammaticallyLocally(username, password);
   }
 });
 
-Cypress.Commands.add("loginProgrammatically", () => {
+Cypress.Commands.add("loginProgrammaticallyLocally", (username, password) => {
+  console.log(cy.fixture('localVariables').username);
+  console.log(cy.fixture('localVariables').password);
   cy.request({
     method: 'POST',
     url: Cypress.config('baseUrl') + 'LoginUser',
     form: true,
     body: {
-      username:'atticus29', //TODO figure out how to generalize
-      password:'FPython!11' //TODO figure out how to generalize
+      username:username,
+      password:password
+    }
+  })
+  .then((resp)=>{
+    expect(resp.status).to.eq(200);
+  });
+});
+
+Cypress.Commands.add("loginProgrammatically", (username, password) => {
+  cy.request({
+    method: 'POST',
+    url: Cypress.config('baseUrl') + 'LoginUser',
+    form: true,
+    body: {
+      username:username,
+      password:password
     }
   })
   .then((resp)=>{
@@ -198,15 +215,3 @@ Cypress.Commands.add('uploadFile', (selector, fileUrl, type = '') => {
 Cypress.Commands.add("logout", ()=>{
   cy.visit('/logout.jsp');
 });
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })

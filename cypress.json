@@ -1,4 +1,4 @@
 {
-  "baseUrl": "http://localhost:8080/",
+  "baseUrl": "http://104.42.42.134/",
   "pageLoadTimeout": 60000
 }

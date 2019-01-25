@@ -1,6 +1,6 @@
 describe('Tests for when IBEIS rebuilds', function() {
   beforeEach(()=>{
-    Cypress.config('baseUrl','http://104.42.42.134:5005/');
+    Cypress.config('baseUrl','http://104.42.42.134/');
   });
 
 it.skip('should get valid JSON results from ___', function(){
