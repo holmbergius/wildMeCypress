@@ -1,15 +1,24 @@
+describe('Logs into flukebook programmatically', function() {
+  it.skip('logs into flukebook programmatically', function(){
+    cy.loginProgrammatically('atticus29', 'FPython!11'); //TODO fix
+  });
+});
+
 //TODO test all of these again
 describe('Flukebook instance encounter page tests that only need me to log in once', function() {
   beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
-  Cypress.config('baseUrl','https://www.flukebook.org/');
+  Cypress.config('baseUrl','https://www.whaleshark.org/');
   cy.logout();
-  cy.loginProgrammatically();
-  cy.createAndNavigateToEncounterFlukeBook();
+  // cy.createAndNavigateToEncounterFlukeBook();
 });
 
 afterEach(function () {
-  cy.deleteEncounterFlukebook();
+  // cy.deleteEncounterFlukebook();
 })
+
+it('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+    cy.submitNewEncounterProgrammaticallyFlukebook();
+});
 
 it.skip('tests whether createAndNavigateToEncounterFlukeBook works', function(){
   cy.createAndNavigateToEncounterFlukeBook();

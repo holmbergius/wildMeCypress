@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Atticus29/wildMeCypress#readme",
   "devDependencies": {
     "cypress": "^3.1.3"
+  },
+  "dependencies": {
+    "uuid": "^3.3.2"
   }
 }

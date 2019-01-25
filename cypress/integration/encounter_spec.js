@@ -152,6 +152,8 @@ describe('Wildbook instance encounter page create and destroy each time for test
 
 describe('Wildbook instance encounter page one created and one deleted encounter', function() {
   before(()=>{
+    cy.fixture('localVariables').as('localVars');
+    cy.login(this.localVars.username, this.localVars.password);
     // cy.login();
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
@@ -308,7 +310,8 @@ describe('Wildbook instance encounter page one created and one deleted encounter
 
 describe('Wildbook instance encounter page no delete after each', function() {
   beforeEach(()=>{
-    cy.login();
+    cy.fixture('localVariables').as('localVars');
+    cy.login(this.localVars.username, this.localVars.password);
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
   it('adds image to encounter', function(){
