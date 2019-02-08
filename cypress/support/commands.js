@@ -60,7 +60,7 @@ Cypress.Commands.add("loginLocallyManually", ()=>{
 });
 
 Cypress.Commands.add("login", (username, password)=>{
-  if(Cypress.config().baseUrl==="https://www.flukebook.org/"){
+  if(Cypress.config().baseUrl==="https://www.flukebook.org/" || Cypress.config().baseUrl==="https://www.whaleshark.org/"){
     cy.loginProgrammatically(username, password);
   } else{
     cy.loginProgrammaticallyLocally(username, password);
@@ -86,7 +86,7 @@ Cypress.Commands.add("loginProgrammatically", (username, password) => {
   cy.log(Cypress.config('baseUrl'));
   cy.request({
     method: 'POST',
-    url: Cypress.config('baseUrl') + 'LoginUser',
+    url: Cypress.config('baseUrl') + '/LoginUser',
     form: true,
     body: {
       username:username,
@@ -165,11 +165,9 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyGeneric", ()=>{
   });
 });
 
-
 Cypress.Commands.add("submitNewEncounterProgrammaticallyFlukebook", ()=>{
   cy.fixture('liveVariables.json').then((liveVars)=>{
-    cy.log(liveVars.username);
-    cy.loginProgrammatically(liveVars.username, liveVars.password);
+    // cy.loginProgrammatically(liveVars.username, liveVars.password);
     cy.visit('/submit.jsp');
     const uuidMaker = require('uuid/v1');
     let uuid1 = uuidMaker();

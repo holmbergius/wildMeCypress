@@ -1,4 +1,4 @@
 {
   "baseUrl": "https://www.flukebook.org/",
-  "pageLoadTimeout": 60000
+  "pageLoadTimeout": 6000
 }

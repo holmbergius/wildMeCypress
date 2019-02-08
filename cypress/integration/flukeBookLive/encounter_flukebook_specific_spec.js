@@ -1,16 +1,23 @@
 describe('Logs into flukebook programmatically', function() {
-  it.skip('logs into flukebook programmatically', function(){
-    cy.loginProgrammatically('atticus29', 'FPython!11'); //TODO fix
+  it('logs into flukebook programmatically', function(){
+    cy.fixture('liveVariables.json').then((liveVars)=>{
+      cy.loginProgrammatically(liveVars.username, liveVars.password);
+    });
   });
 });
 
 //TODO test all of these again
 describe('Flukebook instance encounter page tests that only need me to log in once', function() {
-  beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
-  Cypress.config('baseUrl','https://www.whaleshark.org/');
-  cy.logout();
-  // cy.createAndNavigateToEncounterFlukeBook();
-});
+  before(()=>{
+    Cypress.config('baseUrl','https://www.flukebook.org/');
+    cy.fixture('liveVariables.json').then((liveVars)=>{
+      cy.loginProgrammatically(liveVars.username, liveVars.password);
+    });
+  });
+//   beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
+//     cy.logout();
+//     // cy.createAndNavigateToEncounterFlukeBook();
+// });
 
 afterEach(function () {
   // cy.deleteEncounterFlukebook();
