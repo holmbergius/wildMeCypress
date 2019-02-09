@@ -1,9 +1,16 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:9.6.1-browsers
+    steps:
+      - checkout
 workflows:
   build:
     jobs:
+      - build
       # first get the source code and install npm dependencies
       - cypress/install:
           # run a custom app build step
