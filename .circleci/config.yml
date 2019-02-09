@@ -1,29 +1,21 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.1
-jobs:
- build:
-   machine: true
-   steps:
-     - checkout
-     - run:
-        name: Install Docker Compose
-        command: |
-          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-          chmod +x ~/docker-compose
-          sudo mv ~/docker-compose /usr/local/bin/docker-compose
-     - setup_remote_docker
-     - run: |
-         sudo service docker start
-         docker network create main
-         docker container run -d --name wildbook_db_postgresql --network=main --network-alias postgresql -e POSTGRES_DB=wildbook -e POSTGRES_USER=wildbook -e POSTGRES_PASSWORD=wildbook -v "$(pwd)"/wildbook_db_postgresql:/var/lib/postgresql/data:z postgres:9.6
-         docker container run -d --name wildbook_tomcat --network=main --network-alias wildbook --link wildbook_db_postgresql -v "$(pwd)"/wildbook_tomcat_data_dir:/data/wildbook_data_dir/ wildme/wildbook:latest
-         docker container run -d -p 80:80 --name wildbook_nginx --network=main --network-alias nginx --link wildbook_tomcat wildme/nginx:latest
-         sudo chmod -R 700 wildbook_db_postgresql/
-         docker exec wildbook_db_postgresql curl --retry 10 --retry-connrefused http://localhost:8080
-         docker exec wildbook_tomcat curl --retry 10 --retry-connrefused http://localhost:8080
-         docker exec wildbook_nginx curl --retry 10 --retry-connrefused http://localhost:8080
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
-      - cypress/run # "run" job comes from "cypress" orb hi pretending to change a thing again
+      # first get the source code and install npm dependencies
+      - cypress/install:
+          # run a custom app build step
+          build: 'npm run build'
+      - cypress/run:
+          # make sure app has been installed and built
+          # before running tests across multiple machines
+          # this avoids installing same dependencies 10 times
+          requires:
+            - cypress/install
+          record: true # record results on Cypress Dashboard
+          parallel: true # split all specs across machines
+          parallelism: 4 # use 4 CircleCI machines to finish quickly
+          group: 'all tests' # name this group "all tests" on the dashboard
+          start: 'npm start' # start server before running tests
