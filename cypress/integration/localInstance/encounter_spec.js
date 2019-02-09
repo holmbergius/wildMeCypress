@@ -269,7 +269,7 @@ describe('Wildbook instance encounter page one created and one deleted encounter
   });
 
 
-  it('clicks tapir approve', function(){
+ it.skip('clicks tapir approve', function(){
     cy.get('button[id=editMeta]').click();
     cy.get('input[id=tapirApprove]').click();
     cy.contains('Action results');
@@ -278,7 +278,7 @@ describe('Wildbook instance encounter page one created and one deleted encounter
     cy.url().should('match', /encounter.jsp/);
     //TODO currently fails when it shouldn't see JIRA issue WHALESHARK-29 ("Uncaught SyntaxError: Unexpected token < in encounter.jsp")
   });
-  it('adds dynamic property', function(){
+ it.skip('adds dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -288,7 +288,7 @@ describe('Wildbook instance encounter page one created and one deleted encounter
     cy.url().should('match', /encounter.jsp/);
     cy.contains(/Mystery_Property_1:\s*Glows under fluorescent light/);
   });
-  it('adds dynamic property and edits existing dynamic property', function(){
+ it.skip('adds dynamic property and edits existing dynamic property', function(){
     cy.get('button[id=editDynamic]').click();
     cy.get('input[id=addDynPropInput]').type('Mystery Property 1');
     cy.get('input[id=addDynPropInput2]').type('Glows under fluorescent light');
@@ -314,7 +314,7 @@ describe('Wildbook instance encounter page no delete after each', function() {
     cy.login(this.localVars.username, this.localVars.password);
     cy.createAndNavigateToEncounterWildbookGeneric();
   });
-  it('adds image to encounter', function(){
+ it.skip('adds image to encounter', function(){
     cy.uploadFile('#file-chooser','fluke_manip.jpg')
     // cy.get('input[id=file-chooser]').click();
     // //TODO do things

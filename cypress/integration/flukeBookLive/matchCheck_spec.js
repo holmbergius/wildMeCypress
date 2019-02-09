@@ -12,7 +12,7 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
-  it('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+ it.skip('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.bottleNosedDolphinEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
@@ -33,11 +33,11 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
-  it('navigates to known humpback whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+ it.skip('navigates to known humpback whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.humpbackWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
-      cy.get('div[class=menu-item]').contains('start matching').click({force: true});
+      cy.get('div[class=menu-item]').contains('start another matching job').click({force: true});
       cy.get('p[id=activeTaskId]', {force: true}).invoke('text').then((theText)=>{
         let humpbackTaskId = theText;
         cy.log(humpbackTaskId);
@@ -54,20 +54,11 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
-  // it.skip('waits ten minutes and then checks the output of the iaResults from the taskId of the known humpback whale encounter', function(){
-  //   cy.visit('/iaResults.jsp?taskId=' + humpbackTaskId);
-  //   cy.contains('waiting for results').should('exist');
-  //   cy.wait(600000);
-  //   cy.visit('/iaResults.jsp?taskId=' + humpbackTaskId);
-  //   cy.contains('waiting for results').should('not.exist');
-  //   //TODO fix once the bottleNose tests are fixed
-  // });
-
-  it('navigates to known sperm whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+ it.skip('navigates to known sperm whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.spermWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
-      cy.get('div[class=menu-item]').contains('start matching').click({force: true});
+      cy.get('div[class=menu-item]').contains('start another matching job').click({force: true});
       cy.get('p[id=activeTaskId]', {force: true}).invoke('text').then((theText)=>{
         let spermWhaleTaskID = theText;
         cy.log(spermWhaleTaskID);
@@ -84,20 +75,11 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
-  // it.skip('waits ten minutes and then checks the output of the iaResults from the taskId of the known sperm whale encounter', function(){
-  //   cy.visit('/iaResults.jsp?taskId=' + spermWhaleTaskID);
-  //   cy.contains('waiting for results').should('exist');
-  //   cy.wait(600000);
-  //   cy.visit('/iaResults.jsp?taskId=' + spermWhaleTaskID);
-  //   cy.contains('waiting for results').should('not.exist');
-  //   //TODO fix once the bottleNose tests are fixed
-  // });
-
-  it('navigates to known right whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+ it('navigates to known right whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.rightWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
-      cy.get('div[class=menu-item]').contains('start matching').click({force: true});
+      cy.get('div[class=menu-item]').contains('start another matching job').click({force: true});
       cy.get('p[id=activeTaskId]', {force: true}).invoke('text').then((theText)=>{
         let rightWhaleTaskID = theText;
         cy.log(rightWhaleTaskID);
@@ -111,18 +93,6 @@ describe('Tests to check whether matching is broken', function() {
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
         //TODO test passing despite assertion failing!! WTH
       });
-      //TODO get rightWhaleTaskID
-      //TODO fix once the bottleNose tests are fixed
     });
   });
-
-  // it.skip('waits ten minutes and then checks the output of the iaResults from the taskId of the right whale encounter', function(){
-  //   cy.visit('/iaResults.jsp?taskId=' + rightWhaleTaskID);
-  //   cy.contains('waiting for results').should('exist');
-  //   cy.wait(600000);
-  //   cy.visit('/iaResults.jsp?taskId=' + rightWhaleTaskID);
-  //   cy.contains('waiting for results').should('not.exist');
-  //   //TODO fix once the bottleNose tests are fixed
-  // });
-
 });

@@ -1,5 +1,5 @@
 describe('Logs into flukebook programmatically', function() {
-  it('logs into flukebook programmatically', function(){
+ it.skip('logs into flukebook programmatically', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.loginProgrammatically(liveVars.username, liveVars.password);
     });
@@ -23,7 +23,7 @@ afterEach(function () {
   // cy.deleteEncounterFlukebook();
 })
 
-it('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+it.skip('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
     cy.submitNewEncounterProgrammaticallyFlukebook();
 });
 
