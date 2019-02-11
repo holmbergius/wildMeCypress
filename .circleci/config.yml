@@ -2,9 +2,10 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.5.1
 workflows:
+  version: 2.1
   build:
     jobs:
-      - cypress/run # "run" job comes from "cypress" orb hi pretending to change a thing
-          record: true
+      - cypress/run:
+          store_artifacts: true
           parallel: true
           parallelism: 4
