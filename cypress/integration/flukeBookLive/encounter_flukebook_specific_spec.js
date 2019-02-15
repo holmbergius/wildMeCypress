@@ -1,7 +1,9 @@
 describe('Logs into flukebook programmatically', function() {
-it.skip('logs into flukebook programmatically', function(){
+it('logs into flukebook programmatically', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.loginProgrammatically(liveVars.username, liveVars.password);
+      cy.visit('/welcome.jsp');
+      cy.url().should('match',/welcome/);
     });
   });
 });
@@ -14,16 +16,14 @@ describe('Flukebook instance encounter page tests that only need me to log in on
       cy.loginProgrammatically(liveVars.username, liveVars.password);
     });
   });
-//   beforeEach(()=>{ //why before each? Because I don't want the UI changes to accumulate state changes
-//     cy.logout();
-//     // cy.createAndNavigateToEncounterFlukeBook();
+
+// afterEach(function () {
+//   //TODO anything?
+//   // cy.deleteEncounterFlukebook();
 // });
 
-afterEach(function () {
-  // cy.deleteEncounterFlukebook();
-})
-
-it.skip('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+it.only('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+  // cy.visit('/submit.jsp');
     cy.submitNewEncounterProgrammaticallyFlukebook();
 });
 

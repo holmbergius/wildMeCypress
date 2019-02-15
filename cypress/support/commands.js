@@ -1,5 +1,5 @@
 Cypress.Commands.add("form_request", (url, formData) => {
-  cy.log("Got into form_request");
+  cy.log("Got into form_request custom command");
   cy.server();
     return cy
       .route("POST", url)
@@ -86,7 +86,7 @@ Cypress.Commands.add("loginProgrammatically", (username, password) => {
   cy.log(Cypress.config('baseUrl'));
   cy.request({
     method: 'POST',
-    url: Cypress.config('baseUrl') + '/LoginUser',
+    url: Cypress.config('baseUrl') + 'LoginUser',
     form: true,
     body: {
       username:username,
@@ -97,8 +97,6 @@ Cypress.Commands.add("loginProgrammatically", (username, password) => {
     expect(resp.status).to.eq(200);
     cy.log(resp.requestHeaders.cookie);
   });
-  cy.visit('/welcome.jsp');
-  cy.url().should('match',/welcome/);
 });
 
 Cypress.Commands.add("createAndNavigateToEncounterWildbookGeneric", ()=>{
@@ -141,6 +139,7 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyGeneric", ()=>{
     cy.visit('/submit.jsp');
     const uuidMaker = require('uuid/v1');
     let uuid1 = uuidMaker();
+    cy.log(uuid1);
     let formData = new FormData();
     formData.append("datepicker", "2019-1-24");
     formData.append("location", "the encounter form run portland");
@@ -158,7 +157,7 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyGeneric", ()=>{
     formData.append("comments", "This is a lot of text fields");
     formData.append("genusSpecies", "Megaptera novaeangliae");
     formData.append("catalogNumber", uuid1);
-    cy.form_request('https://www.whaleshark.org/EncounterForm', formData); //TODO maybe don't have this hardcoded?
+    cy.form_request('https://www.flukebook.org/EncounterForm', formData); //TODO maybe don't have this hardcoded?
     cy.visit('/encounters/encounter.jsp?number=' + uuid1);
     cy.url().should('match',/encounters/);
     cy.contains('Study Site 1');
@@ -166,11 +165,12 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyGeneric", ()=>{
 });
 
 Cypress.Commands.add("submitNewEncounterProgrammaticallyFlukebook", ()=>{
-  cy.fixture('liveVariables.json').then((liveVars)=>{
+  // cy.fixture('liveVariables.json').then((liveVars)=>{
     // cy.loginProgrammatically(liveVars.username, liveVars.password);
     cy.visit('/submit.jsp');
     const uuidMaker = require('uuid/v1');
     let uuid1 = uuidMaker();
+    cy.log(uuid1);
     let formData = new FormData();
     formData.append("datepicker", "2019-1-24");
     formData.append("location", "the encounter form run portland");
@@ -192,7 +192,7 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyFlukebook", ()=>{
     cy.visit('/encounters/encounter.jsp?number=' + uuid1);
     cy.url().should('match',/encounters/);
     cy.contains('Study Site 1');
-  });
+  // });
 });
 
 // Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{ //TODO create Programmatic version

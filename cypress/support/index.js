@@ -17,7 +17,7 @@
 import './commands'
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  cy.log("Hi Mark Uncaught Exception");
+  console.log("Hi Mark Uncaught Exception");
   // debugger;
   // returning false here prevents Cypress from
   // failing the test
