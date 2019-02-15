@@ -6,4 +6,3 @@ workflows:
     jobs:
       - cypress/run:
           store_artifacts: true
-          no_output_timeout: 1h
