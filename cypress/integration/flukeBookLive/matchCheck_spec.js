@@ -3,7 +3,7 @@ Cypress.on('fail', (err, runnable) => {
 });
 
 describe('Standalone temporary test for github issue', function() {
-  it.only('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
+  it.skip('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
     cy.request({
       method: 'POST',
       url: Cypress.config('baseUrl') + '/LoginUser',
