@@ -3,7 +3,7 @@ Cypress.on('fail', (err, runnable) => {
 });
 
 describe('Standalone temporary test for github issue', function() {
-  it.skip('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
+ it.skip('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
     cy.request({
       method: 'POST',
       url: 'https://www.flukebook.org/LoginUser',
@@ -48,7 +48,7 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
- it('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+it('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.bottleNosedDolphinEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
@@ -69,7 +69,7 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
- it('navigates to known humpback whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+it('navigates to known humpback whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.humpbackWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
@@ -90,7 +90,7 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
- it('navigates to known sperm whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+it('navigates to known sperm whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.spermWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();
@@ -111,7 +111,7 @@ describe('Tests to check whether matching is broken', function() {
     });
   });
 
- it('navigates to known right whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
+it('navigates to known right whale encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.visit('/encounters/encounter.jsp?number=' + liveVars.rightWhaleEncounterID);
       cy.get('div[class=image-enhancer-menu]').click();

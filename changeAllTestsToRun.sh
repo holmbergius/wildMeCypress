@@ -1,4 +1,4 @@
-for file in ./cypress/integration/currentWildbookLive/*
+for file in ./cypress/integration/*/*
 do
   ls -larth $file
   sed -i '' 's/^it.skip(/it(/g' "$file"
