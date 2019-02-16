@@ -86,7 +86,7 @@ Cypress.Commands.add("loginProgrammatically", (username, password) => {
   cy.log(Cypress.config('baseUrl'));
   cy.request({
     method: 'POST',
-    url: Cypress.config('baseUrl') + 'LoginUser',
+    url: Cypress.config('baseUrl') + '/LoginUser',
     form: true,
     body: {
       username:username,
@@ -164,9 +164,7 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyGeneric", ()=>{
   });
 });
 
-Cypress.Commands.add("submitNewEncounterProgrammaticallyFlukebook", ()=>{
-  // cy.fixture('liveVariables.json').then((liveVars)=>{
-    // cy.loginProgrammatically(liveVars.username, liveVars.password);
+Cypress.Commands.add("submitNewEncounterAndConfirmPresencesProgrammaticallyFlukebook", ()=>{
     cy.visit('/submit.jsp');
     const uuidMaker = require('uuid/v1');
     let uuid1 = uuidMaker();
@@ -188,14 +186,13 @@ Cypress.Commands.add("submitNewEncounterProgrammaticallyFlukebook", ()=>{
     formData.append("comments", "This is a lot of text fields");
     formData.append("genusSpecies", "Megaptera novaeangliae");
     formData.append("catalogNumber", uuid1);
-    cy.form_request('https://www.whaleshark.org/EncounterForm', formData); //TODO maybe don't have this hardcoded?
+    cy.form_request('https://www.flukebook.org/EncounterForm', formData); //TODO maybe don't have this hardcoded?
     cy.visit('/encounters/encounter.jsp?number=' + uuid1);
     cy.url().should('match',/encounters/);
     cy.contains('Study Site 1');
-  // });
 });
 
-// Cypress.Commands.add("createAndNavigateToEncounterFlukeBook", ()=>{ //TODO create Programmatic version
+// Cypress.Commands.add("createAndNavigateToEncounterFlukeBookManually", ()=>{ //TODO create Programmatic version
 //   cy.loginProgrammatically('atticus29', 'FPython!11'); //TODO fix
 //   cy.visit('/submit.jsp');
 //   cy.get('input[id=datepicker]').type(new Date().toString());

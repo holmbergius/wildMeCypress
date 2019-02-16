@@ -1,5 +1,5 @@
 describe('Logs into flukebook programmatically', function() {
-it('logs into flukebook programmatically', function(){
+it.skip('logs into flukebook programmatically', function(){
     cy.fixture('liveVariables.json').then((liveVars)=>{
       cy.loginProgrammatically(liveVars.username, liveVars.password);
       cy.visit('/welcome.jsp');
@@ -22,14 +22,16 @@ describe('Flukebook instance encounter page tests that only need me to log in on
 //   // cy.deleteEncounterFlukebook();
 // });
 
-it.only('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
-  // cy.visit('/submit.jsp');
-    cy.submitNewEncounterProgrammaticallyFlukebook();
+it('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+    cy.submitNewEncounterAndConfirmPresencesProgrammaticallyFlukebook();
+    // let currentUrl = cy.url();
+    // cy.log(currentUrl);
+    // console.log(currentUrl);
 });
 
-it.skip('tests whether createAndNavigateToEncounterFlukeBook works', function(){
-  cy.createAndNavigateToEncounterFlukeBook();
-});
+// it('tests whether createAndNavigateToEncounterFlukeBookManually works', function(){ //TODO currently manual submission of forms doesn't seem to work with wildBook on cypress. Weird. Works fine on my other app.
+//   cy.createAndNavigateToEncounterFlukeBookManually();
+// });
 
 it.skip('displays some known text in encounter.jsp', function(){
   cy.contains('Location');
@@ -37,30 +39,50 @@ it.skip('displays some known text in encounter.jsp', function(){
   cy.contains('Gallery');
 });
 
-it.skip('can edit location', function(){
+it('can edit location', function(){ //TODO LEFT OFF HERE
   cy.get('button[id=editLocation]').click();
-  cy.get('textarea[name=location]').type('Vancouver, WA');
-  cy.get('input[id=addLocation]').click();
-  cy.get('#selectCountry').select('United States', {force: true});
-  cy.get('input[id=countryFormBtn]').click();
-  cy.get('#selectCode').select('Study Site 1', {force: true});
-  cy.get('input[id=setLocationBtn]').click();
-  cy.get('input[id=depthInput]').type('1');
-  cy.get('input[id=AddDepth]').click();
-  cy.get('input[id=lat]').type('45.634268');
-  cy.get('input[id=longitude]').type('-122.665984');
-  cy.get('input[id=setGPSbutton]').click({force: true});
+  cy.url().then(result =>{
+    // cy.log(result);
+    let encounterNum = result.match(/.*number=(\d.*$)/)[1];
+    cy.log(encounterNum);
+    let formData = new FormData();
+    formData.append("number", encounterNum);
+    formData.append("encounter", encounterNum);
+    formData.append("location", "Dark Woods");
+    cy.form_request('https://www.flukebook.org/IndividualAddEncounter', formData);
+  });
+
+  // cy.get('textarea[name=location]').type('Dark Woods');
+  // cy.get('input[id=addLocation]').click();
+  // cy.get('#selectCountry').select('United States', {force: true});
+  // cy.get('input[id=countryFormBtn]').click();
+  // cy.get('#selectCode').select('Study Site 1', {force: true});
+  // cy.get('input[id=setLocationBtn]').click();
+  // cy.get('input[id=depthInput]').type('1');
+  // cy.get('input[id=AddDepth]').click();
+  // cy.get('input[id=lat]').type('45.634268');
+  // cy.get('input[id=longitude]').type('-122.665984');
+  // cy.get('input[id=setGPSbutton]').click({force: true});
   cy.get('button[id=closeEditLocation]').click();
+  cy.contains('Dark Woods');
 });
 
 it.skip('can add to marked individual', function(){
-  // cy.createAndNavigateToEncounterFlukeBook();
+  // let formData = new FormData();
+  // formData.append("individual", "frumpy");
+  // formData.append("matchType", "Pattern match");
+  // cy.form_request('https://www.flukebook.org/IndividualAddEncounter', formData);
+  cy.url().then(result =>{
+    cy.log(result);
+  });
+
   cy.get('button[id=editIdentity]').click();
   cy.get('input[id=individualAddEncounterInput]').type('frumpy', {force: true}); //TODO add real whale name here
   cy.get('#matchType').select('Pattern match', {force: true});
   cy.get('input[id=Add]').click({force: true});
   cy.get('button[id=closeEditIdentity]').click();
-  cy.contains('frumpy');
+  cy.reload();
+  // cy.contains('frumpy');
 });
 
 it.skip('can create marked individual', function(){
