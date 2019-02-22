@@ -3,7 +3,7 @@ Cypress.on('fail', (err, runnable) => {
 });
 
 describe('Standalone temporary test for github issue', function() {
- it.skip('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
+ it.only('navigates to known bottle nosed dolphin encounter page and re-runs matching, waits ten minutes, and then checks the output of the iaResults from the taskId of the known bottle nosed dolphin encounter github issue version', function(){
     cy.request({
       method: 'POST',
       url: 'https://www.flukebook.org/LoginUser',
@@ -29,8 +29,10 @@ describe('Standalone temporary test for github issue', function() {
          cy.contains('waiting for results').should('exist');
          cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
          cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-         cy.wait(480000);
-         cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
+         cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
+         // cy.wait(10000);
+         // cy.wait(480000);
+         // cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
          cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
          cy.get('span[class="img-info-type"]', {force: true}).should('exist');
          //TODO test passing despite assertion failing!! WTH
@@ -60,7 +62,7 @@ it('navigates to known bottle nosed dolphin encounter page and re-runs matching,
         cy.contains('waiting for results').should('exist');
         cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-        cy.wait(480000);
+        cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
         cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
         cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
@@ -81,7 +83,7 @@ it('navigates to known humpback whale encounter page and re-runs matching, waits
         cy.contains('waiting for results').should('exist');
         cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-        cy.wait(480000);
+        cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
         cy.visit('/iaResults.jsp?taskId=' + humpbackTaskId);
         cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
@@ -102,7 +104,7 @@ it('navigates to known sperm whale encounter page and re-runs matching, waits te
         cy.contains('waiting for results').should('exist');
         cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-        cy.wait(480000);
+        cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
         cy.visit('/iaResults.jsp?taskId=' + spermWhaleTaskID);
         cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
@@ -123,7 +125,7 @@ it('navigates to known right whale encounter page and re-runs matching, waits te
         cy.contains('waiting for results').should('exist');
         cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-        cy.wait(480000);
+        cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
         cy.visit('/iaResults.jsp?taskId=' + rightWhaleTaskID);
         cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
