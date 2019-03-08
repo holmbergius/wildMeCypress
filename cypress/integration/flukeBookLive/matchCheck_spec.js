@@ -29,6 +29,7 @@ describe('Standalone temporary test for github issue', function() {
          cy.contains('waiting for results').should('exist');
          cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
          cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
+         // cy.wait(400);
          cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
          cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
          cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
@@ -60,8 +61,9 @@ it('navigates to known bottle nosed dolphin encounter page and re-runs matching,
         cy.contains('waiting for results').should('exist');
         cy.get('span[class="annot-info-num"]', {force: true}).should('not.exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('not.exist');
-        cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
-        cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
+        cy.wait(400);
+        // cy.contains('.waiting', 'waiting for results', {timeout: 480000}).should('not.be.visible');
+        // cy.visit('/iaResults.jsp?taskId=' + bottleNoseTaskId);
         cy.get('span[class="annot-info-num"]', {force: true}).should('exist');
         cy.get('span[class="img-info-type"]', {force: true}).should('exist');
         //TODO test passing despite assertion failing!! WTH
