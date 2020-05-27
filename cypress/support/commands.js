@@ -59,6 +59,15 @@ Cypress.Commands.add("loginLocallyManually", ()=>{
   cy.url().should('match',/welcome\.jsp/);
 });
 
+Cypress.Commands.add("loginLynxStaging", (username, password)=>{
+  cy.visit('/login.jsp');
+  cy.url().should('not.match',/welcome/);
+  cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
+  cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
+  cy.get('input[id=logMeIn]').click();
+  cy.url().should('match',/welcome\.jsp/);
+});
+
 Cypress.Commands.add("login", (username, password)=>{
   if(Cypress.config().baseUrl==="https://www.flukebook.org/" || Cypress.config().baseUrl==="https://www.whaleshark.org/"){
     cy.loginProgrammatically(username, password);
