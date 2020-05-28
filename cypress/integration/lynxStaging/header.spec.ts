@@ -1,6 +1,6 @@
 describe('Tests associated with the header in the lynx repo', function() {
   beforeEach(()=>{
-    Cypress.config('baseUrl', 'https://lynx.wildbook.org/'); //production URL: https://lynx.wildbook.org/ https://general-staging.wildbook.org/
+    Cypress.config('baseUrl', 'https://general-staging.wildbook.org/'); //production URL: https://lynx.wildbook.org/ https://general-staging.wildbook.org/
     cy.logout();
     cy.fixture('localVariables.json').then((localVars)=>{
       cy.loginLynxStaging(localVars.username, localVars.password);
@@ -42,6 +42,11 @@ describe('Tests associated with the header in the lynx repo', function() {
     cy.contains('a', 'Encounters').should('be.visible');
     cy.contains('a', 'Encounters').click({force: true});
     cy.contains('a', 'Encounter Calendar').should('not.exist');
+  });
+
+  it.('does not see Participate in navbar', function(){
+    cy.contains('a', 'Partcipate').should('not.exist');
+    cy.contains('a', 'User Agreement').should('not.exist');
   });
 
 });
