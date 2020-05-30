@@ -62,8 +62,8 @@ Cypress.Commands.add("loginLocallyManually", ()=>{
 Cypress.Commands.add("loginLynxStaging", (username, password)=>{
   cy.visit('/login.jsp');
   cy.url().should('not.match',/welcome/);
-  cy.get('input[name=username]').type('tomcat'); //TODO put username in a better place
-  cy.get('input[name=password]').type('tomcat123'); //TODO put password in a better place
+  cy.get('input[name=username]').type(username); //TODO put username in a better place
+  cy.get('input[name=password]').type(password); //TODO put password in a better place
   cy.get('input[id=logMeIn]').click();
   cy.url().should('match',/welcome\.jsp/);
 });

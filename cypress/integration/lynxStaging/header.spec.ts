@@ -44,9 +44,32 @@ describe('Tests associated with the header in the lynx repo', function() {
     cy.contains('a', 'Encounter Calendar').should('not.exist');
   });
 
-  it.('does not see Participate in navbar', function(){
+  it('does not see Participate in navbar', function(){
     cy.contains('a', 'Partcipate').should('not.exist');
     cy.contains('a', 'User Agreement').should('not.exist');
+  });
+
+  it('sees report an encounter in navbar', function(){
+    cy.get('a[id=report-encounter-header]').should('be.visible');
+  });
+
+  it('sees admin only when logged in as admin', function(){
+    cy.logout();
+    cy.reload({forceReload: true});
+    cy.contains('a','Admin').should('not.be.visible');
+    cy.fixture('localVariables.json').then((localVars)=>{
+      cy.loginLynxStaging(localVars.username, localVars.password);
+      cy.contains('a','Admin').should('be.visible');
+    });
+    cy.logout();
+    cy.reload({forceReload: true});
+    cy.fixture('localVariables.json').then((localVars)=>{
+      cy.log(localVars.researcherUsername);
+      cy.loginLynxStaging(localVars.researcherUsername, localVars.researcherPassword);
+      // cy.reload({forceReload: true});
+      cy.contains('a','Admin').should('not.be.visible');
+      cy.get('a[id=report-encounter-header]').should('be.visible');
+    });
   });
 
 });

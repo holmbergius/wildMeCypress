@@ -1,4 +1,6 @@
 {
   "username": "tomcat",
-  "password": "tomcat123"
+  "password": "tomcat123",
+  "researcherUsername": "mark_fisher",
+  "researcherPassword": "tomcat123"
 }
