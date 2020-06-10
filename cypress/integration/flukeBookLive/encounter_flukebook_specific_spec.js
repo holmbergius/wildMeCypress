@@ -22,7 +22,7 @@ describe('Flukebook instance encounter page tests that only need me to log in on
 //   // cy.deleteEncounterFlukebook();
 // });
 
-it('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
+it.skip('tests whether submitNewEncounterProgrammaticallyFlukebook works', function(){
     cy.submitNewEncounterAndConfirmPresencesProgrammaticallyFlukebook();
     // let currentUrl = cy.url();
     // cy.log(currentUrl);
@@ -39,7 +39,7 @@ it.skip('displays some known text in encounter.jsp', function(){
   cy.contains('Gallery');
 });
 
-it('can edit location', function(){ //TODO LEFT OFF HERE
+it.skip('can edit location', function(){ //TODO LEFT OFF HERE
   cy.get('button[id=editLocation]').click();
   cy.url().then(result =>{
     // cy.log(result);
