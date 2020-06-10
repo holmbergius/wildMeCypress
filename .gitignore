@@ -49,3 +49,7 @@ Thumbs.db
 
 # Functions
 /functions
+
+# Videos and Screenshots
+cypress/screenshots/
+cypress/videos/
