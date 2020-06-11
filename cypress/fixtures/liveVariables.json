@@ -9,5 +9,13 @@
   "cooccurrencesDiagramText":"Co-occurrences Diagram",
   "cooccurrencesTableText":"Co-occurrences Table",
   "markedIndividualWithName": "Marked Individual Albo",
-  "testIndividualName": "Albo"
+  "testIndividualName": "Albo",
+  "collaboratorA_Username": "collaborator_a",
+  "collaboratorA_Password": "tomcat123",
+  "collaboratorA_imageName": "mystery_insect.jpg",
+  "collaboratorB_Username": "collaborator_b",
+  "collaboratorB_Password": "tomcat123",
+  "collaboratorC_Username": "collaborator_c",
+  "collaboratorC_Password": "tomcat123",
+  "nonCollaboratorMessage": "Request collaboration with"
 }
